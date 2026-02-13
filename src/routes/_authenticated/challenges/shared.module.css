@@ -1,0 +1,74 @@
+/* Shared styles for all challenge pages */
+
+.pageIcon {
+  font-size: clamp(32px, 6vw, 40px);
+}
+
+.pageTitle {
+  color: var(--color-text);
+  font-size: clamp(1.3rem, 4vw, 1.625rem);
+}
+
+.glassCard {
+  background: var(--color-glass);
+  backdrop-filter: blur(8px);
+}
+
+.questionText {
+  font-family: var(--mantine-font-family-headings);
+  color: var(--color-text);
+  font-size: clamp(1rem, 3vw, 1.125rem);
+}
+
+.completedCard {
+  background: var(--color-completed-gradient);
+}
+
+.completedIcon {
+  font-size: clamp(36px, 7vw, 48px);
+}
+
+.completedTitle {
+  color: var(--color-text);
+  font-size: clamp(1.1rem, 3.5vw, 1.375rem);
+}
+
+.letterSpaced {
+  letter-spacing: 0.08em;
+}
+
+.imageWrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.optionButton {
+  transition: all 0.2s ease;
+  white-space: normal;
+  text-align: center;
+  min-height: 44px;
+}
+
+.letterCard {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 231, 231, 0.95)
+  );
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--mantine-color-valentine-1);
+}
+
+.letterText {
+  color: var(--color-text);
+  line-height: 1.8;
+  white-space: pre-line;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .imageWrapper {
+    border-radius: 8px;
+  }
+}

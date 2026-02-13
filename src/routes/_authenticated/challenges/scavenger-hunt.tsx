@@ -1,28 +1,16 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Button,
-  Card,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-  Progress,
-  Box,
-  ActionIcon,
-} from "@mantine/core";
+import { Button, Card, Stack, Text, TextInput, Title, Progress, Box } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
+import { HeartCelebration } from "../../../components/HeartCelebration";
 import { completeChallenge, getProgress } from "../../../lib/progress";
+import shared from "./shared.module.css";
 
-export const Route = createFileRoute(
-  "/_authenticated/challenges/scavenger-hunt",
-)({
+export const Route = createFileRoute("/_authenticated/challenges/scavenger-hunt")({
   component: ScavengerHunt,
 });
 
-// Replace these with real questions and answers!
-// Answers are lowercased for comparison.
 const QUESTIONS = [
   {
     question: "What was the subject line of the first email I ever sent you?",
@@ -69,37 +57,29 @@ function ScavengerHunt() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <Stack gap="xl" py="lg">
         <Box>
-          <ActionIcon
+          <Button
             component={Link}
             to="/challenges"
-            variant="subtle"
-            color="gray"
-            size="lg"
-            mb="sm"
+            variant="light"
+            color="valentine"
+            size="sm"
+            leftSection="←"
           >
-            ←
-          </ActionIcon>
+            Back to Challenges
+          </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} />
+        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "scavengerHunt" : undefined} />
 
         <Stack gap="xs" align="center">
-          <Text style={{ fontSize: 40 }}>🔍</Text>
-          <Title
-            order={2}
-            ta="center"
-            style={{ color: "#3d0d0d" }}
-          >
+          <Text className={shared.pageIcon}>🔍</Text>
+          <Title order={2} ta="center" className={shared.pageTitle}>
             Scavenger Hunt
           </Title>
-          <Text size="sm" c="dimmed" ta="center" maw={400}>
+          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
             Go through our emails and texts to find the answers!
           </Text>
         </Stack>
@@ -107,7 +87,7 @@ function ScavengerHunt() {
         {!completed ? (
           <>
             <Progress
-              value={((currentQ) / QUESTIONS.length) * 100}
+              value={(currentQ / QUESTIONS.length) * 100}
               color="valentine"
               size="sm"
               radius="xl"
@@ -122,26 +102,12 @@ function ScavengerHunt() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card
-                  p="xl"
-                  radius="lg"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.85)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                >
+                <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
                     <Text size="xs" c="dimmed">
                       Question {currentQ + 1} of {QUESTIONS.length}
                     </Text>
-                    <Text
-                      fw={600}
-                      size="lg"
-                      style={{
-                        fontFamily: '"Playfair Display", Georgia, serif',
-                        color: "#3d0d0d",
-                      }}
-                    >
+                    <Text fw={600} size="lg" className={shared.questionText}>
                       {QUESTIONS[currentQ].question}
                     </Text>
                     <Text size="sm" c="dimmed" fs="italic">
@@ -150,24 +116,11 @@ function ScavengerHunt() {
                     <TextInput
                       placeholder="Type your answer..."
                       value={answer}
-                      onChange={(e) => {
-                        setAnswer(e.currentTarget.value);
-                        setError(false);
-                      }}
+                      onChange={(e) => { setAnswer(e.currentTarget.value); setError(false); }}
                       onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                       error={error ? "Not quite... try again!" : undefined}
-                      styles={{
-                        input: {
-                          borderColor: "#ffcece",
-                          "&:focus": { borderColor: "#ff3334" },
-                        },
-                      }}
                     />
-                    <Button
-                      color="valentine"
-                      onClick={handleSubmit}
-                      disabled={!answer.trim()}
-                    >
+                    <Button color="valentine" onClick={handleSubmit} disabled={!answer.trim()}>
                       Submit Answer
                     </Button>
                   </Stack>
@@ -181,29 +134,14 @@ function ScavengerHunt() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, type: "spring" }}
           >
-            <Card
-              p="xl"
-              radius="lg"
-              ta="center"
-              style={{
-                background: "linear-gradient(135deg, #ffe7e7, #ffcece)",
-              }}
-            >
+            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
               <Stack gap="md" align="center">
-                <Text style={{ fontSize: 48 }}>❤️</Text>
-                <Title order={3} style={{ color: "#3d0d0d" }}>
+                <HeartCelebration animate={!alreadyComplete} />
+                <Title order={3} className={shared.completedTitle}>
                   Heart Earned!
                 </Title>
-                <Text c="dimmed">
-                  You really do pay attention to our conversations!
-                </Text>
-                <Button
-                  component={Link}
-                  to="/challenges"
-                  color="valentine"
-                  variant="light"
-                  mt="sm"
-                >
+                <Text style={{ color: "var(--color-text-dimmed)" }}>You really do pay attention to our conversations!</Text>
+                <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>
               </Stack>

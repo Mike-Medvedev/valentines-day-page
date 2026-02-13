@@ -1,18 +1,12 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { Box } from "@mantine/core";
 import { FloatingHearts } from "../components/FloatingHearts";
+import classes from "./__root.module.css";
 
 const RootLayout = () => (
-  <Box
-    style={{
-      minHeight: "100dvh",
-      display: "flex",
-      flexDirection: "column",
-      position: "relative",
-    }}
-  >
+  <Box className={classes.rootLayout}>
     <FloatingHearts />
-    <Box style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column" }}>
+    <Box className={classes.content}>
       <Outlet />
     </Box>
   </Box>

@@ -1,18 +1,10 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Box,
-  Card,
-  SimpleGrid,
-  Stack,
-  Text,
-  Title,
-  Button,
-  Badge,
-} from "@mantine/core";
+import { Box, Card, SimpleGrid, Stack, Text, Title, Button, Badge } from "@mantine/core";
 import { motion } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
 import { getProgress, isAllComplete, type ChallengeKey } from "../../../lib/progress";
+import classes from "./index.module.css";
 
 export const Route = createFileRoute("/_authenticated/challenges/")({
   component: ChallengeHub,
@@ -30,24 +22,21 @@ const CHALLENGES: ChallengeInfo[] = [
   {
     key: "scavengerHunt",
     title: "Scavenger Hunt",
-    description:
-      "Dig through our emails and texts to answer these questions about us",
+    description: "Dig through our emails and texts to answer these questions about us",
     icon: "🔍",
     route: "/challenges/scavenger-hunt",
   },
   {
     key: "photoMemory",
     title: "Photo Memory",
-    description:
-      "How well do you remember our moments? Answer questions about our photos",
+    description: "How well do you remember our moments? Answer questions about our photos",
     icon: "📸",
     route: "/challenges/photo-memory",
   },
   {
     key: "timeline",
     title: "Our Timeline",
-    description:
-      "Read quotes from our journey and scratch to reveal the memories",
+    description: "Read quotes from our journey and scratch to reveal the memories",
     icon: "✨",
     route: "/challenges/timeline",
   },
@@ -66,33 +55,20 @@ function ChallengeHub() {
   const allComplete = isAllComplete();
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <Stack gap="xl" py="lg">
         <Stack gap="xs" align="center">
-          <Title
-            order={2}
-            ta="center"
-            style={{ color: "#3d0d0d", lineHeight: 1.2 }}
-          >
+          <Title order={2} ta="center" className={classes.pageTitle}>
             Your Journey Awaits
           </Title>
-          <Text size="md" c="dimmed" ta="center" maw={400}>
-            Complete each challenge to collect hearts and unlock a special
-            surprise
+          <Text size="md" ta="center" maw={400} className={classes.subtitle}>
+            Complete each challenge to collect hearts and unlock a special surprise
           </Text>
         </Stack>
 
         <HeartTracker refreshKey={refreshKey} />
 
-        <SimpleGrid
-          cols={{ base: 1, sm: 2 }}
-          spacing="md"
-          mt="sm"
-        >
+        <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mt="sm">
           {CHALLENGES.map((challenge, i) => {
             const completed = progress[challenge.key];
             return (
@@ -101,64 +77,29 @@ function ChallengeHub() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
+                style={{ height: "100%" }}
               >
                 <Card
                   component={Link}
                   to={challenge.route}
-                  p="xl"
+                  p={{ base: "md", sm: "xl" }}
                   radius="lg"
-                  style={{
-                    background: completed
-                      ? "linear-gradient(135deg, #ffe7e7, #ffcece)"
-                      : "rgba(255, 255, 255, 0.85)",
-                    backdropFilter: "blur(8px)",
-                    border: completed
-                      ? "2px solid #ff9a9b"
-                      : "1px solid rgba(255, 206, 206, 0.6)",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    textDecoration: "none",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                  styles={{
-                    root: {
-                      "&:hover": {
-                        transform: "translateY(-2px)",
-                        boxShadow: "0 8px 24px rgba(255, 3, 9, 0.12)",
-                      },
-                    },
-                  }}
+                  className={classes.challengeCard}
+                  data-completed={String(!!completed)}
+                  h="100%"
                 >
                   {completed && (
-                    <Badge
-                      color="valentine"
-                      variant="filled"
-                      size="sm"
-                      style={{
-                        position: "absolute",
-                        top: 12,
-                        right: 12,
-                      }}
-                    >
+                    <Badge color="valentine" variant="filled" size="sm" className={classes.completeBadge}>
                       Complete
                     </Badge>
                   )}
                   <Stack gap="sm">
-                    <Text style={{ fontSize: 36 }}>{challenge.icon}</Text>
+                    <Text className={classes.challengeIcon}>{challenge.icon}</Text>
                     <div>
-                      <Text
-                        fw={700}
-                        size="lg"
-                        style={{
-                          fontFamily:
-                            '"Playfair Display", Georgia, serif',
-                          color: "#3d0d0d",
-                        }}
-                      >
+                      <Text fw={700} size="lg" className={classes.challengeTitle}>
                         {challenge.title}
                       </Text>
-                      <Text size="sm" c="dimmed" mt={4}>
+                      <Text size="sm" mt={4} className={classes.cardDescription}>
                         {challenge.description}
                       </Text>
                     </div>
@@ -179,25 +120,22 @@ function ChallengeHub() {
               <motion.div
                 animate={{
                   boxShadow: [
-                    "0 0 20px rgba(255, 3, 9, 0.2)",
-                    "0 0 40px rgba(255, 3, 9, 0.4)",
-                    "0 0 20px rgba(255, 3, 9, 0.2)",
+                    `0 0 20px rgba(255, 3, 9, 0.2)`,
+                    `0 0 40px rgba(255, 3, 9, 0.4)`,
+                    `0 0 20px rgba(255, 3, 9, 0.2)`,
                   ],
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
-                style={{ display: "inline-block", borderRadius: 999 }}
+                className={classes.glowWrap}
               >
                 <Button
                   component={Link}
                   to="/finale"
-                  size="xl"
+                  size="lg"
                   color="valentine"
                   radius="xl"
-                  px={48}
-                  style={{
-                    fontSize: 18,
-                    fontFamily: '"Playfair Display", Georgia, serif',
-                  }}
+                  px={32}
+                  className={classes.unlockButton}
                 >
                   Unlock Your Surprise
                 </Button>

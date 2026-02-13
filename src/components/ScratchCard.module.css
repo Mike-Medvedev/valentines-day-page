@@ -1,0 +1,59 @@
+.container {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  touch-action: none;
+  margin: 0 auto;
+}
+
+.container[data-revealed="true"] {
+  cursor: default;
+}
+
+.container[data-revealed="false"] {
+  cursor: crosshair;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.canvasOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.revealedBadge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(255, 3, 9, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: clamp(11px, 2vw, 13px);
+  font-weight: 600;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .revealedBadge {
+    bottom: 8px;
+    right: 8px;
+    padding: 4px 10px;
+  }
+}

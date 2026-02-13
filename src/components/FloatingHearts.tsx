@@ -1,8 +1,10 @@
-import { useMemo } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { valentine } from "../theme";
+import classes from "./FloatingHearts.module.css";
 
-const HEART_COLORS = ["#ff3334", "#ff6465", "#ff9a9b", "#ffcece", "#ff0309", "#cc0000"];
-const EMOJIS = ["♥", "♥", "♥", "🌻", "🌻"]; // ~60% hearts, ~40% sunflowers
+const HEART_COLORS = [valentine[4], valentine[3], valentine[2], valentine[1], valentine[6], valentine[8]];
+const EMOJIS = ["♥", "♥", "♥", "🌻", "🌻"];
 
 interface Particle {
   id: number;
@@ -16,7 +18,8 @@ interface Particle {
   bobDuration: number;
   spinSpeed: number;
   delay: number;
-  opacity: number;
+  peakOpacity: number;
+  fadeDuration: number;
   color: string;
 }
 
@@ -24,54 +27,47 @@ interface FloatingHeartsProps {
   count?: number;
 }
 
+function generateParticles(count: number): Particle[] {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 576;
+  const effectiveCount = isMobile ? Math.min(count, 12) : count;
+
+  return Array.from({ length: effectiveCount }, (_, i) => {
+    const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    const isSunflower = emoji === "🌻";
+    return {
+      id: i,
+      x: Math.random() * 95,
+      y: Math.random() * 95,
+      emoji,
+      size: isSunflower
+        ? (isMobile ? 22 : 28) + Math.random() * (isMobile ? 14 : 20)
+        : (isMobile ? 16 : 22) + Math.random() * (isMobile ? 14 : 22),
+      swayAmount: 3 + Math.random() * 5,
+      swayDuration: 3 + Math.random() * 3,
+      bobAmount: 2 + Math.random() * 4,
+      bobDuration: 2 + Math.random() * 3,
+      spinSpeed: 6 + Math.random() * 8,
+      delay: Math.random() * 6,
+      peakOpacity: 0.25 + Math.random() * 0.3,
+      fadeDuration: 4 + Math.random() * 4,
+      color: HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)],
+    };
+  });
+}
+
 export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
-  const particles = useMemo<Particle[]>(() => {
-    return Array.from({ length: count }, (_, i) => {
-      const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
-      const isSunflower = emoji === "🌻";
-      return {
-        id: i,
-        x: Math.random() * 95,
-        y: Math.random() * 95,
-        emoji,
-        size: isSunflower ? 20 + Math.random() * 16 : 14 + Math.random() * 18,
-        swayAmount: 3 + Math.random() * 5,
-        swayDuration: 3 + Math.random() * 3,
-        bobAmount: 2 + Math.random() * 4,
-        bobDuration: 2 + Math.random() * 3,
-        spinSpeed: 6 + Math.random() * 8,
-        delay: Math.random() * 4,
-        opacity: 0.2 + Math.random() * 0.25,
-        color: HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)],
-      };
-    });
-  }, [count]);
+  const [particles] = useState(() => generateParticles(count));
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
-        zIndex: 0,
-        overflow: "hidden",
-      }}
-    >
+    <div className={classes.container}>
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          initial={{
-            x: `${p.x}vw`,
-            y: `${p.y}vh`,
-            opacity: 0,
-            scale: 0.5,
-          }}
+          className={classes.particle}
+          initial={{ x: `${p.x}vw`, y: `${p.y}vh`, opacity: 0, scale: 0.6 }}
           animate={{
-            opacity: [0, p.opacity, p.opacity, p.opacity, 0],
-            scale: [0.5, 1, 1, 1, 0.5],
+            opacity: [0, p.peakOpacity, 0, p.peakOpacity, 0],
+            scale: [0.6, 1.05, 0.85, 1.05, 0.6],
             x: [
               `${p.x}vw`,
               `${p.x + p.swayAmount}vw`,
@@ -89,17 +85,12 @@ export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
             rotate: [0, 15, -15, 10, -10, 0],
           }}
           transition={{
-            duration: p.swayDuration + p.bobDuration + 4,
+            duration: p.fadeDuration + p.swayDuration + p.bobDuration,
             delay: p.delay,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          style={{
-            position: "absolute",
-            fontSize: p.size,
-            color: p.emoji === "♥" ? p.color : undefined,
-            userSelect: "none",
-          }}
+          style={{ fontSize: p.size, color: p.emoji === "♥" ? p.color : undefined }}
         >
           {p.emoji}
         </motion.div>

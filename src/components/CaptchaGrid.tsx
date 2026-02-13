@@ -1,10 +1,8 @@
 import { useState, useMemo } from "react";
 import { Box, SimpleGrid, Text, Button, Image, Stack, Paper } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
+import classes from "./CaptchaGrid.module.css";
 
-// Placeholder images — replace these paths with your actual images
-// Put your gf's photos in src/assets/captcha/ and import them,
-// or use URLs. The "correct" ones should be photos of your gf.
 const CAPTCHA_IMAGES = [
   { id: 1, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=1", isCorrect: true },
   { id: 2, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=2", isCorrect: false },
@@ -41,11 +39,8 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
     setError(false);
     setSelected((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
@@ -69,22 +64,9 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}>
-      <Paper
-        p="lg"
-        radius="lg"
-        style={{
-          background: "#fff",
-          border: "2px solid #ff3334",
-          overflow: "hidden",
-        }}>
+      <Paper p="lg" radius="lg" className={classes.wrapper}>
         <Stack gap="md">
-          <Box
-            style={{
-              background: "#ff3334",
-              margin: "calc(var(--mantine-spacing-lg) * -1)",
-              marginBottom: 0,
-              padding: "16px 20px",
-            }}>
+          <Box className={classes.header}>
             <Text c="white" fw={600} size="sm">
               Select all images of the most beautiful person in the world
             </Text>
@@ -95,26 +77,15 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
               <motion.div
                 key={img.id}
                 whileTap={{ scale: 0.95 }}
-                style={{ position: "relative", cursor: "pointer" }}
+                className={classes.imageItem}
                 onClick={() => toggleSelection(img.id)}>
-                <Box
-                  style={{
-                    position: "relative",
-                    borderRadius: 8,
-                    overflow: "hidden",
-                    border: selected.has(img.id) ? "3px solid #ff3334" : "3px solid transparent",
-                    transition: "border-color 0.2s ease",
-                  }}>
+                <Box className={classes.imageBox} data-selected={String(selected.has(img.id))}>
                   <Image
                     src={img.src}
                     alt={`captcha-${img.id}`}
-                    h={100}
                     w="100%"
                     fit="cover"
-                    style={{
-                      opacity: selected.has(img.id) ? 0.8 : 1,
-                      transition: "opacity 0.2s ease",
-                    }}
+                    className={`${classes.captchaImage} ${selected.has(img.id) ? classes.selectedImage : ""}`}
                   />
                   <AnimatePresence>
                     {selected.has(img.id) && (
@@ -122,21 +93,7 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
-                        style={{
-                          position: "absolute",
-                          top: 4,
-                          right: 4,
-                          width: 24,
-                          height: 24,
-                          borderRadius: "50%",
-                          background: "#ff3334",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: "white",
-                          fontSize: 14,
-                          fontWeight: 700,
-                        }}>
+                        className={classes.checkBadge}>
                         ✓
                       </motion.div>
                     )}

@@ -1,0 +1,70 @@
+.wrapper {
+  background: #fff;
+  border: 2px solid var(--mantine-color-valentine-4);
+  overflow: hidden;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.header {
+  background: var(--mantine-color-valentine-4);
+  margin: calc(var(--mantine-spacing-lg) * -1);
+  margin-bottom: 0;
+  padding: 16px 20px;
+}
+
+.imageItem {
+  position: relative;
+  cursor: pointer;
+}
+
+.imageBox {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.imageBox[data-selected="true"] {
+  border-color: var(--mantine-color-valentine-4);
+}
+
+.captchaImage {
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.selectedImage {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.checkBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--mantine-color-valentine-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .header {
+    padding: 12px 14px;
+  }
+
+  .checkBadge {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+}

@@ -1,24 +1,17 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Box,
-  Card,
-  Stack,
-  Text,
-  Title,
-  Button,
-  ActionIcon,
-} from "@mantine/core";
+import { Box, Card, Stack, Text, Title, Button } from "@mantine/core";
 import { motion } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
+import { HeartCelebration } from "../../../components/HeartCelebration";
 import { ScratchCard } from "../../../components/ScratchCard";
 import { completeChallenge, getProgress } from "../../../lib/progress";
+import shared from "./shared.module.css";
 
 export const Route = createFileRoute("/_authenticated/challenges/timeline")({
   component: TimelinePage,
 });
 
-// Replace with your real quotes and photos!
 const TIMELINE_ITEMS = [
   {
     quote: '"The moment I knew you were different..."',
@@ -56,33 +49,29 @@ function TimelinePage() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <Stack gap="xl" py="lg">
         <Box>
-          <ActionIcon
+          <Button
             component={Link}
             to="/challenges"
-            variant="subtle"
-            color="gray"
-            size="lg"
-            mb="sm"
+            variant="light"
+            color="valentine"
+            size="sm"
+            leftSection="←"
           >
-            ←
-          </ActionIcon>
+            Back to Challenges
+          </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} />
+        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "timeline" : undefined} />
 
         <Stack gap="xs" align="center">
-          <Text style={{ fontSize: 40 }}>✨</Text>
-          <Title order={2} ta="center" style={{ color: "#3d0d0d" }}>
+          <Text className={shared.pageIcon}>✨</Text>
+          <Title order={2} ta="center" className={shared.pageTitle}>
             Our Timeline
           </Title>
-          <Text size="sm" c="dimmed" ta="center" maw={400}>
+          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
             Scratch each card to reveal the memory behind the words
           </Text>
         </Stack>
@@ -96,42 +85,16 @@ function TimelinePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.15, duration: 0.4 }}
               >
-                <Card
-                  p="xl"
-                  radius="lg"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.85)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                >
+                <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
-                    <Text
-                      size="xs"
-                      c="dimmed"
-                      tt="uppercase"
-                      fw={600}
-                      style={{ letterSpacing: "0.08em" }}
-                    >
+                    <Text size="xs" c="dimmed" tt="uppercase" fw={600} className={shared.letterSpaced}>
                       {item.date}
                     </Text>
-                    <Text
-                      size="xl"
-                      fw={600}
-                      fs="italic"
-                      style={{
-                        fontFamily: '"Playfair Display", Georgia, serif',
-                        color: "#3d0d0d",
-                      }}
-                    >
+                    <Text size="xl" fw={600} fs="italic" className={shared.questionText}>
                       {item.quote}
                     </Text>
-                    <Box style={{ borderRadius: 12, overflow: "hidden" }}>
-                      <ScratchCard
-                        imageSrc={item.photo}
-                        width={400}
-                        height={280}
-                        onReveal={handleReveal}
-                      />
+                    <Box className={shared.imageWrapper}>
+                      <ScratchCard imageSrc={item.photo} width={400} height={280} onReveal={handleReveal} />
                     </Box>
                   </Stack>
                 </Card>
@@ -144,29 +107,12 @@ function TimelinePage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, type: "spring" }}
           >
-            <Card
-              p="xl"
-              radius="lg"
-              ta="center"
-              style={{
-                background: "linear-gradient(135deg, #ffe7e7, #ffcece)",
-              }}
-            >
+            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
               <Stack gap="md" align="center">
-                <Text style={{ fontSize: 48 }}>❤️</Text>
-                <Title order={3} style={{ color: "#3d0d0d" }}>
-                  Heart Earned!
-                </Title>
-                <Text c="dimmed">
-                  Every moment with you is worth remembering
-                </Text>
-                <Button
-                  component={Link}
-                  to="/challenges"
-                  color="valentine"
-                  variant="light"
-                  mt="sm"
-                >
+                <HeartCelebration animate={!alreadyComplete} />
+                <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
+                <Text style={{ color: "var(--color-text-dimmed)" }}>Every moment with you is worth remembering</Text>
+                <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>
               </Stack>

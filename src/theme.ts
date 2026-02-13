@@ -1,7 +1,7 @@
 import { createTheme } from "@mantine/core";
 import type { MantineColorsTuple } from "@mantine/core";
 
-const valentine: MantineColorsTuple = [
+export const valentine: MantineColorsTuple = [
   "#ffe7e7",
   "#ffcece",
   "#ff9a9b",
@@ -16,6 +16,7 @@ const valentine: MantineColorsTuple = [
 
 export const theme = createTheme({
   primaryColor: "valentine",
+  primaryShade: 4,
   colors: {
     valentine,
   },

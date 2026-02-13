@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Container, Box } from "@mantine/core";
 import { isAuthenticated } from "../lib/auth";
+import classes from "./_authenticated.module.css";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: () => {
@@ -13,16 +14,8 @@ export const Route = createFileRoute("/_authenticated")({
 
 function AuthenticatedLayout() {
   return (
-    <Box
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "24px 16px",
-      }}
-    >
-      <Container size={640} w="100%" style={{ flex: 1 }}>
+    <Box className={classes.layout}>
+      <Container size={640} w="100%" className={classes.container}>
         <Outlet />
       </Container>
     </Box>

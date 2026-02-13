@@ -1,0 +1,77 @@
+.pageTitle {
+  color: var(--color-text);
+  line-height: 1.2;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+}
+
+.subtitle {
+  color: var(--color-text-dimmed);
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.cardDescription {
+  color: var(--color-text-dimmed);
+}
+
+.challengeCard {
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.challengeCard[data-completed="false"] {
+  background: var(--color-glass);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.challengeCard[data-completed="true"] {
+  background: var(--color-completed-gradient);
+  border: 2px solid var(--mantine-color-valentine-2);
+}
+
+.challengeCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--color-glow);
+}
+
+.completeBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.challengeIcon {
+  font-size: clamp(28px, 5vw, 36px);
+}
+
+.challengeTitle {
+  font-family: var(--mantine-font-family-headings);
+  color: var(--color-text);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+}
+
+.unlockButton {
+  font-size: clamp(14px, 3vw, 18px);
+  font-family: var(--mantine-font-family-headings);
+}
+
+.glowWrap {
+  display: inline-block;
+  border-radius: 999px;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .challengeCard {
+    padding: var(--mantine-spacing-md);
+  }
+
+  .completeBadge {
+    top: 8px;
+    right: 8px;
+  }
+}
