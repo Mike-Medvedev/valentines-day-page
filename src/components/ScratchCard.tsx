@@ -22,13 +22,13 @@ export function ScratchCard({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isRevealed, setIsRevealed] = useState(false);
-  const [isScratching, setIsScratching] = useState(false);
+  const isScratchingRef = useRef(false);
   const hasCalledReveal = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
@@ -48,7 +48,7 @@ export function ScratchCard({
   const calculateRevealPercentage = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return 0;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return 0;
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
@@ -64,7 +64,7 @@ export function ScratchCard({
     (clientX: number, clientY: number) => {
       const canvas = canvasRef.current;
       if (!canvas || isRevealed) return;
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
       if (!ctx) return;
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -73,7 +73,7 @@ export function ScratchCard({
       const y = (clientY - rect.top) * scaleY;
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
-      ctx.arc(x, y, 28, 0, Math.PI * 2);
+      ctx.arc(x, y, 50, 0, Math.PI * 2);
       ctx.fill();
       const revealed = calculateRevealPercentage();
       if (revealed >= revealThreshold && !hasCalledReveal.current) {
@@ -85,28 +85,64 @@ export function ScratchCard({
     [isRevealed, revealThreshold, onReveal, calculateRevealPercentage],
   );
 
-  const handleMouseDown = (e: React.MouseEvent) => { setIsScratching(true); scratch(e.clientX, e.clientY); };
-  const handleMouseMove = (e: React.MouseEvent) => { if (!isScratching) return; scratch(e.clientX, e.clientY); };
-  const handleMouseUp = () => setIsScratching(false);
-  const handleTouchStart = (e: React.TouchEvent) => { e.preventDefault(); setIsScratching(true); scratch(e.touches[0].clientX, e.touches[0].clientY); };
-  const handleTouchMove = (e: React.TouchEvent) => { e.preventDefault(); if (!isScratching) return; scratch(e.touches[0].clientX, e.touches[0].clientY); };
-  const handleTouchEnd = () => setIsScratching(false);
+  const startScratching = useCallback(() => {
+    isScratchingRef.current = true;
+  }, []);
+  const stopScratching = useCallback(() => {
+    isScratchingRef.current = false;
+  }, []);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    startScratching();
+    scratch(e.clientX, e.clientY);
+  };
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isScratchingRef.current) return;
+    scratch(e.clientX, e.clientY);
+  };
+  const handleMouseUp = () => stopScratching();
+
+  // Attach touch listeners with { passive: false } so preventDefault() works
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      e.preventDefault();
+      startScratching();
+      scratch(e.touches[0].clientX, e.touches[0].clientY);
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      if (!isScratchingRef.current) return;
+      scratch(e.touches[0].clientX, e.touches[0].clientY);
+    };
+    const handleTouchEnd = () => stopScratching();
+
+    canvas.addEventListener("touchstart", handleTouchStart, { passive: false });
+    canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+    canvas.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      canvas.removeEventListener("touchstart", handleTouchStart);
+      canvas.removeEventListener("touchmove", handleTouchMove);
+      canvas.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [scratch, startScratching, stopScratching]);
 
   return (
     <Box
       ref={containerRef}
       className={classes.container}
       data-revealed={String(isRevealed)}
-      style={{ maxWidth: width, aspectRatio: `${width}/${height}` }}
-    >
+      style={{ maxWidth: width, aspectRatio: `${width}/${height}` }}>
       <motion.img src={imageSrc} alt="Memory" className={classes.image} animate={{ opacity: 1 }} />
 
       <motion.div
         animate={{ opacity: isRevealed ? 0 : 1 }}
         transition={{ duration: 0.6 }}
         className={classes.canvasOverlay}
-        style={{ pointerEvents: isRevealed ? "none" : "auto" }}
-      >
+        style={{ pointerEvents: isRevealed ? "none" : "auto" }}>
         <canvas
           ref={canvasRef}
           width={width}
@@ -116,9 +152,6 @@ export function ScratchCard({
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
         />
       </motion.div>
 
@@ -127,8 +160,7 @@ export function ScratchCard({
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, type: "spring" }}
-          className={classes.revealedBadge}
-        >
+          className={classes.revealedBadge}>
           Revealed!
         </motion.div>
       )}

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button, Card, Stack, Text, Title, Image, SimpleGrid, Progress, Box, ActionIcon } from "@mantine/core";
+import { Button, Card, Stack, Text, Title, Image, SimpleGrid, Progress, Box } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
+import { HeartCelebration } from "../../../components/HeartCelebration";
 import { completeChallenge, getProgress } from "../../../lib/progress";
 import shared from "./shared.module.css";
 
@@ -70,19 +71,26 @@ function PhotoMemory() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <Stack gap="xl" py="lg">
         <Box>
-          <ActionIcon component={Link} to="/challenges" variant="subtle" color="gray" size="lg" mb="sm">
-            ←
-          </ActionIcon>
+          <Button
+            component={Link}
+            to="/challenges"
+            variant="light"
+            color="valentine"
+            size="sm"
+            leftSection="←"
+          >
+            Back to Challenges
+          </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} />
+        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "photoMemory" : undefined} />
 
         <Stack gap="xs" align="center">
           <Text className={shared.pageIcon}>📸</Text>
           <Title order={2} ta="center" className={shared.pageTitle}>
             Photo Memory
           </Title>
-          <Text size="sm" c="dimmed" ta="center" maw={400}>
+          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
             How well do you remember our moments together?
           </Text>
         </Stack>
@@ -105,7 +113,7 @@ function PhotoMemory() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card p="xl" radius="lg" className={shared.glassCard}>
+                <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
                     <Text size="xs" c="dimmed">
                       Question {currentQ + 1} of {PHOTO_QUESTIONS.length}
@@ -115,9 +123,10 @@ function PhotoMemory() {
                       <Image
                         src={PHOTO_QUESTIONS[currentQ].photo}
                         alt="Memory photo"
-                        h={240}
+                        w="100%"
                         fit="cover"
                         radius="md"
+                        style={{ aspectRatio: "3/2" }}
                       />
                     </Box>
 
@@ -182,11 +191,11 @@ function PhotoMemory() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, type: "spring" }}
           >
-            <Card p="xl" radius="lg" ta="center" className={shared.completedCard}>
+            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
               <Stack gap="md" align="center">
-                <Text className={shared.completedIcon}>❤️</Text>
+                <HeartCelebration animate={!alreadyComplete} />
                 <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
-                <Text c="dimmed">Your memory of us is as strong as my love for you!</Text>
+                <Text style={{ color: "var(--color-text-dimmed)" }}>Your memory of us is as strong as my love for you!</Text>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>

@@ -1,6 +1,16 @@
 .pageTitle {
   color: var(--color-text);
   line-height: 1.2;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+}
+
+.subtitle {
+  color: var(--color-text-dimmed);
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.cardDescription {
+  color: var(--color-text-dimmed);
 }
 
 .challengeCard {
@@ -10,6 +20,8 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .challengeCard[data-completed="false"] {
@@ -34,20 +46,32 @@
 }
 
 .challengeIcon {
-  font-size: 36px;
+  font-size: clamp(28px, 5vw, 36px);
 }
 
 .challengeTitle {
   font-family: var(--mantine-font-family-headings);
   color: var(--color-text);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
 }
 
 .unlockButton {
-  font-size: 18px;
+  font-size: clamp(14px, 3vw, 18px);
   font-family: var(--mantine-font-family-headings);
 }
 
 .glowWrap {
   display: inline-block;
   border-radius: 999px;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .challengeCard {
+    padding: var(--mantine-spacing-md);
+  }
+
+  .completeBadge {
+    top: 8px;
+    right: 8px;
+  }
 }

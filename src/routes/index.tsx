@@ -88,7 +88,7 @@ function AuthGatePage() {
               )}
             </AnimatePresence>
 
-            <Text size="xs" c="dimmed" ta="center" maw={300}>
+            <Text size="xs" ta="center" maw={300} style={{ color: "var(--color-text-dimmed)" }}>
               This site is protected by advanced Gmail Guzzler detection technology
             </Text>
           </Stack>

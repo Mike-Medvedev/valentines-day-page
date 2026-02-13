@@ -46,6 +46,14 @@
   color: white;
   padding: 6px 12px;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: clamp(11px, 2vw, 13px);
   font-weight: 600;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .revealedBadge {
+    bottom: 8px;
+    right: 8px;
+    padding: 4px 10px;
+  }
 }

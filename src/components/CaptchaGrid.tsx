@@ -83,10 +83,9 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
                   <Image
                     src={img.src}
                     alt={`captcha-${img.id}`}
-                    h={100}
                     w="100%"
                     fit="cover"
-                    className={selected.has(img.id) ? classes.selectedImage : undefined}
+                    className={`${classes.captchaImage} ${selected.has(img.id) ? classes.selectedImage : ""}`}
                   />
                   <AnimatePresence>
                     {selected.has(img.id) && (

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Box, Card, SimpleGrid, Stack, Text, Title, Button, Badge } from "@mantine/core";
 import { motion } from "framer-motion";
-import { valentine } from "../../../theme";
 import { HeartTracker } from "../../../components/HeartTracker";
 import { getProgress, isAllComplete, type ChallengeKey } from "../../../lib/progress";
 import classes from "./index.module.css";
@@ -62,7 +61,7 @@ function ChallengeHub() {
           <Title order={2} ta="center" className={classes.pageTitle}>
             Your Journey Awaits
           </Title>
-          <Text size="md" c="dimmed" ta="center" maw={400}>
+          <Text size="md" ta="center" maw={400} className={classes.subtitle}>
             Complete each challenge to collect hearts and unlock a special surprise
           </Text>
         </Stack>
@@ -78,14 +77,16 @@ function ChallengeHub() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
+                style={{ height: "100%" }}
               >
                 <Card
                   component={Link}
                   to={challenge.route}
-                  p="xl"
+                  p={{ base: "md", sm: "xl" }}
                   radius="lg"
                   className={classes.challengeCard}
                   data-completed={String(!!completed)}
+                  h="100%"
                 >
                   {completed && (
                     <Badge color="valentine" variant="filled" size="sm" className={classes.completeBadge}>
@@ -98,7 +99,7 @@ function ChallengeHub() {
                       <Text fw={700} size="lg" className={classes.challengeTitle}>
                         {challenge.title}
                       </Text>
-                      <Text size="sm" c="dimmed" mt={4}>
+                      <Text size="sm" mt={4} className={classes.cardDescription}>
                         {challenge.description}
                       </Text>
                     </div>
@@ -130,10 +131,10 @@ function ChallengeHub() {
                 <Button
                   component={Link}
                   to="/finale"
-                  size="xl"
+                  size="lg"
                   color="valentine"
                   radius="xl"
-                  px={48}
+                  px={32}
                   className={classes.unlockButton}
                 >
                   Unlock Your Surprise

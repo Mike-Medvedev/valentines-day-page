@@ -25,13 +25,14 @@ function FinalePage() {
   const { width: windowWidth, height: windowHeight } = useViewportSize();
 
   const dodgeNo = useCallback(() => {
-    const maxX = 200;
-    const maxY = 150;
+    const isMobile = windowWidth < 576;
+    const maxX = isMobile ? 80 : 200;
+    const maxY = isMobile ? 60 : 150;
     setNoPosition({
       x: (Math.random() - 0.5) * maxX * 2,
       y: (Math.random() - 0.5) * maxY * 2,
     });
-  }, []);
+  }, [windowWidth]);
 
   const handleYes = () => setAnswered(true);
 
@@ -55,7 +56,7 @@ function FinalePage() {
           transition={{ duration: 0.8, type: "spring" }}
           className={classes.questionCard}
         >
-          <Card p="xl" radius="lg" ta="center" className={classes.glassCard}>
+          <Card p={{ base: "lg", sm: "xl" }} radius="lg" ta="center" className={classes.glassCard}>
             <Stack gap="xl" align="center">
               <motion.div
                 animate={{ scale: [1, 1.15, 1] }}
@@ -70,7 +71,7 @@ function FinalePage() {
                   <br />
                   My Valentine?
                 </Title>
-                <Text c="dimmed" size="md">
+                <Text size="md" style={{ color: "var(--color-text-dimmed)" }}>
                   You've proven your love through every challenge.
                   <br />
                   Now there's just one question left...
@@ -79,7 +80,7 @@ function FinalePage() {
 
               <Box className={classes.buttonRow}>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button size="xl" color="valentine" px={48} onClick={handleYes} className={classes.yesButton}>
+                  <Button size="lg" color="valentine" px={32} onClick={handleYes} className={classes.yesButton}>
                     Yes!
                   </Button>
                 </motion.div>
@@ -113,7 +114,7 @@ function FinalePage() {
           transition={{ duration: 0.8 }}
           className={classes.answerCard}
         >
-          <Card p="xl" radius="lg" ta="center" className={classes.glassCardStrong}>
+          <Card p={{ base: "lg", sm: "xl" }} radius="lg" ta="center" className={classes.glassCardStrong}>
             <Stack gap="lg" align="center">
               <motion.div
                 initial={{ scale: 0 }}
@@ -137,7 +138,7 @@ function FinalePage() {
                     <br />
                     Happy Valentine's Day, my love.
                   </Text>
-                  <Text size="md" c="dimmed" mt="sm">
+                  <Text size="md" mt="sm" style={{ color: "var(--color-text-dimmed)" }}>
                     Now close this and come give me a hug 🤗
                   </Text>
                 </Stack>

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { valentine } from "../theme";
 import classes from "./FloatingHearts.module.css";
@@ -27,29 +27,36 @@ interface FloatingHeartsProps {
   count?: number;
 }
 
+function generateParticles(count: number): Particle[] {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 576;
+  const effectiveCount = isMobile ? Math.min(count, 12) : count;
+
+  return Array.from({ length: effectiveCount }, (_, i) => {
+    const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    const isSunflower = emoji === "🌻";
+    return {
+      id: i,
+      x: Math.random() * 95,
+      y: Math.random() * 95,
+      emoji,
+      size: isSunflower
+        ? (isMobile ? 22 : 28) + Math.random() * (isMobile ? 14 : 20)
+        : (isMobile ? 16 : 22) + Math.random() * (isMobile ? 14 : 22),
+      swayAmount: 3 + Math.random() * 5,
+      swayDuration: 3 + Math.random() * 3,
+      bobAmount: 2 + Math.random() * 4,
+      bobDuration: 2 + Math.random() * 3,
+      spinSpeed: 6 + Math.random() * 8,
+      delay: Math.random() * 6,
+      peakOpacity: 0.25 + Math.random() * 0.3,
+      fadeDuration: 4 + Math.random() * 4,
+      color: HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)],
+    };
+  });
+}
+
 export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
-  const particles = useMemo<Particle[]>(() => {
-    return Array.from({ length: count }, (_, i) => {
-      const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
-      const isSunflower = emoji === "🌻";
-      return {
-        id: i,
-        x: Math.random() * 95,
-        y: Math.random() * 95,
-        emoji,
-        size: isSunflower ? 28 + Math.random() * 20 : 22 + Math.random() * 22,
-        swayAmount: 3 + Math.random() * 5,
-        swayDuration: 3 + Math.random() * 3,
-        bobAmount: 2 + Math.random() * 4,
-        bobDuration: 2 + Math.random() * 3,
-        spinSpeed: 6 + Math.random() * 8,
-        delay: Math.random() * 6,
-        peakOpacity: 0.25 + Math.random() * 0.3,
-        fadeDuration: 4 + Math.random() * 4,
-        color: HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)],
-      };
-    });
-  }, [count]);
+  const [particles] = useState(() => generateParticles(count));
 
   return (
     <div className={classes.container}>

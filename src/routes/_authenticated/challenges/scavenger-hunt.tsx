@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button, Card, Stack, Text, TextInput, Title, Progress, Box, ActionIcon } from "@mantine/core";
+import { Button, Card, Stack, Text, TextInput, Title, Progress, Box } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
+import { HeartCelebration } from "../../../components/HeartCelebration";
 import { completeChallenge, getProgress } from "../../../lib/progress";
 import shared from "./shared.module.css";
 
@@ -59,19 +60,26 @@ function ScavengerHunt() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <Stack gap="xl" py="lg">
         <Box>
-          <ActionIcon component={Link} to="/challenges" variant="subtle" color="gray" size="lg" mb="sm">
-            ←
-          </ActionIcon>
+          <Button
+            component={Link}
+            to="/challenges"
+            variant="light"
+            color="valentine"
+            size="sm"
+            leftSection="←"
+          >
+            Back to Challenges
+          </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} />
+        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "scavengerHunt" : undefined} />
 
         <Stack gap="xs" align="center">
           <Text className={shared.pageIcon}>🔍</Text>
           <Title order={2} ta="center" className={shared.pageTitle}>
             Scavenger Hunt
           </Title>
-          <Text size="sm" c="dimmed" ta="center" maw={400}>
+          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
             Go through our emails and texts to find the answers!
           </Text>
         </Stack>
@@ -94,7 +102,7 @@ function ScavengerHunt() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card p="xl" radius="lg" className={shared.glassCard}>
+                <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
                     <Text size="xs" c="dimmed">
                       Question {currentQ + 1} of {QUESTIONS.length}
@@ -126,13 +134,13 @@ function ScavengerHunt() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, type: "spring" }}
           >
-            <Card p="xl" radius="lg" ta="center" className={shared.completedCard}>
+            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
               <Stack gap="md" align="center">
-                <Text className={shared.completedIcon}>❤️</Text>
+                <HeartCelebration animate={!alreadyComplete} />
                 <Title order={3} className={shared.completedTitle}>
                   Heart Earned!
                 </Title>
-                <Text c="dimmed">You really do pay attention to our conversations!</Text>
+                <Text style={{ color: "var(--color-text-dimmed)" }}>You really do pay attention to our conversations!</Text>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>

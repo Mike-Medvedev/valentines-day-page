@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Box, Card, Stack, Text, Title, Button, ActionIcon } from "@mantine/core";
+import { Box, Card, Stack, Text, Title, Button } from "@mantine/core";
 import { motion } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
+import { HeartCelebration } from "../../../components/HeartCelebration";
 import { completeChallenge, getProgress } from "../../../lib/progress";
 import shared from "./shared.module.css";
 
@@ -40,25 +41,32 @@ function LoveLetter() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <Stack gap="xl" py="lg">
         <Box>
-          <ActionIcon component={Link} to="/challenges" variant="subtle" color="gray" size="lg" mb="sm">
-            ←
-          </ActionIcon>
+          <Button
+            component={Link}
+            to="/challenges"
+            variant="light"
+            color="valentine"
+            size="sm"
+            leftSection="←"
+          >
+            Back to Challenges
+          </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} />
+        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "loveLetter" : undefined} />
 
         <Stack gap="xs" align="center">
           <Text className={shared.pageIcon}>💌</Text>
           <Title order={2} ta="center" className={shared.pageTitle}>
             A Letter For You
           </Title>
-          <Text size="sm" c="dimmed" ta="center" maw={400}>
+          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
             Read it with your whole heart
           </Text>
         </Stack>
 
         {!completed ? (
-          <Card p="xl" radius="lg" className={shared.letterCard}>
+          <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.letterCard}>
             <Stack gap="lg">
               {LETTER_PARAGRAPHS.map((paragraph, i) => (
                 <motion.div
@@ -109,11 +117,11 @@ function LoveLetter() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, type: "spring" }}
           >
-            <Card p="xl" radius="lg" ta="center" className={shared.completedCard}>
+            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
               <Stack gap="md" align="center">
-                <Text className={shared.completedIcon}>❤️</Text>
+                <HeartCelebration animate={!alreadyComplete} />
                 <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
-                <Text c="dimmed">Thank you for reading my heart out</Text>
+                <Text style={{ color: "var(--color-text-dimmed)" }}>Thank you for reading my heart out</Text>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>

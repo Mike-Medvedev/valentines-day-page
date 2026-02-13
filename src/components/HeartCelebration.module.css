@@ -1,0 +1,56 @@
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: clamp(80px, 15vw, 120px);
+}
+
+.mainHeart {
+  position: relative;
+  font-size: clamp(48px, 10vw, 64px);
+  z-index: 2;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(255, 3, 9, 0.5));
+}
+
+.glowRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 3, 9, 0.4),
+    rgba(255, 100, 101, 0.2),
+    transparent
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  font-size: clamp(14px, 3vw, 20px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.plusOne {
+  position: absolute;
+  top: 0;
+  font-family: var(--mantine-font-family-headings);
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+  font-weight: 700;
+  color: var(--mantine-color-valentine-6);
+  text-shadow: 0 2px 8px rgba(255, 3, 9, 0.3);
+  z-index: 3;
+  pointer-events: none;
+}
