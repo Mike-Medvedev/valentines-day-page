@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Container, Box } from "@mantine/core";
 import { isAuthenticated } from "../lib/auth";
 import { ProgressProvider } from "../lib/ProgressContext";
+import { UnlockNotification } from "../components/UnlockNotification";
 import classes from "./_authenticated.module.css";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/_authenticated")({
 function AuthenticatedLayout() {
   return (
     <ProgressProvider>
+      <UnlockNotification />
       <Box className={classes.layout}>
         <Container size={640} w="100%" className={classes.container}>
           <Outlet />

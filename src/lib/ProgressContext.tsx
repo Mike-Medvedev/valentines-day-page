@@ -11,23 +11,44 @@ interface ProgressContextValue {
   completedCount: number;
   isAllComplete: boolean;
   completeChallenge: (key: ChallengeKey) => void;
+  showUnlockNotification: boolean;
+  dismissUnlockNotification: () => void;
 }
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState<ChallengeProgress>(getStoredProgress);
+  const [showUnlockNotification, setShowUnlockNotification] = useState(false);
 
   const completeChallenge = useCallback((key: ChallengeKey) => {
     persistChallenge(key);
-    setProgress(getStoredProgress());
+    const next = getStoredProgress();
+    setProgress(next);
+    const newCount = Object.values(next).filter(Boolean).length;
+    if (newCount === 4) {
+      setShowUnlockNotification(true);
+    }
+  }, []);
+
+  const dismissUnlockNotification = useCallback(() => {
+    setShowUnlockNotification(false);
   }, []);
 
   const completedCount = Object.values(progress).filter(Boolean).length;
   const isAllComplete = completedCount === 4;
 
   return (
-    <ProgressContext.Provider value={{ progress, completedCount, isAllComplete, completeChallenge }}>
+    <ProgressContext.Provider
+      value={{
+        progress,
+        completedCount,
+        isAllComplete,
+        completeChallenge,
+        showUnlockNotification,
+        dismissUnlockNotification,
+      }}
+    >
       {children}
     </ProgressContext.Provider>
   );

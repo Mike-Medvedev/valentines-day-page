@@ -1,11 +1,26 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button, Card, Stack, Text, Title, Image, SimpleGrid, Progress, Box, Group } from "@mantine/core";
+import {
+  Button,
+  Card,
+  Stack,
+  Text,
+  Title,
+  Image,
+  SimpleGrid,
+  Progress,
+  Box,
+  Group,
+} from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
 import { HeartCelebration } from "../../../components/HeartCelebration";
 import { useProgress } from "../../../lib/ProgressContext";
 import shared from "./shared.module.css";
+
+import dinnerPic from "../../../assets/photos/dinner-pic.jpeg";
+import theCanuck from "../../../assets/photos/the-canuck.jpg";
+import partyHat from "../../../assets/photos/party-hat.jpeg";
 
 export const Route = createFileRoute("/_authenticated/challenges/photo-memory")({
   component: PhotoMemory,
@@ -13,22 +28,22 @@ export const Route = createFileRoute("/_authenticated/challenges/photo-memory")(
 
 const PHOTO_QUESTIONS = [
   {
-    photo: "https://placehold.co/600x400/ffe7e7/ff0309?text=Our+Photo+1",
+    photo: dinnerPic,
     question: "Where was this photo taken?",
-    options: ["The park", "The beach", "The restaurant", "At home"],
-    correctIndex: 1,
-  },
-  {
-    photo: "https://placehold.co/600x400/ffe7e7/ff0309?text=Our+Photo+2",
-    question: "What were we celebrating in this photo?",
-    options: ["Birthday", "Anniversary", "Just because", "New Year"],
+    options: ["Botswana", "San Marzano", "The common man", "Bleaker st bar"],
     correctIndex: 2,
   },
   {
-    photo: "https://placehold.co/600x400/ffe7e7/ff0309?text=Our+Photo+3",
-    question: "Who took this photo?",
-    options: ["You", "Me", "A stranger", "Timer"],
+    photo: theCanuck,
+    question: "Where was this photo taken?",
+    options: ["Brass Monkey", "The Wren", "Lazy Sister", "The Canuck"],
     correctIndex: 3,
+  },
+  {
+    photo: partyHat,
+    question: "Where was this photo taken?",
+    options: ["Downtown Social", "Rosies", "205 Club", "Bowery Hotel"],
+    correctIndex: 0,
   },
 ];
 
@@ -77,13 +92,15 @@ function PhotoMemory() {
             variant="light"
             color="valentine"
             size="sm"
-            leftSection="←"
-          >
+            leftSection="←">
             Back to Challenges
           </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "photoMemory" : undefined} />
+        <HeartTracker
+          refreshKey={refreshKey}
+          justCompletedKey={!alreadyComplete && completed ? "photoMemory" : undefined}
+        />
 
         <Group gap="sm" justify="center">
           <Text className={shared.pageIcon}>📸</Text>
@@ -108,8 +125,7 @@ function PhotoMemory() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              >
+                transition={{ duration: 0.3 }}>
                 <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
                     <Box className={shared.imageWrapper}>
@@ -117,9 +133,9 @@ function PhotoMemory() {
                         src={PHOTO_QUESTIONS[currentQ].photo}
                         alt="Memory photo"
                         w="100%"
-                        fit="cover"
+                        fit="contain"
                         radius="md"
-                        style={{ aspectRatio: "3/2" }}
+                        style={{ maxHeight: 360 }}
                       />
                     </Box>
 
@@ -152,15 +168,13 @@ function PhotoMemory() {
                               onClick={() => handleSelect(idx)}
                               disabled={showResult}
                               className={shared.optionButton}
-                              style={{ background: bg, borderColor }}
-                            >
+                              style={{ background: bg, borderColor }}>
                               {option}
                             </Button>
                           </motion.div>
                         );
                       })}
                     </SimpleGrid>
-
                   </Stack>
                 </Card>
               </motion.div>
@@ -170,12 +184,17 @@ function PhotoMemory() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
-          >
-            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
+            transition={{ duration: 0.5, type: "spring" }}>
+            <Card
+              p={{ base: "md", sm: "xl" }}
+              radius="lg"
+              ta="center"
+              className={shared.completedCard}>
               <Stack gap="md" align="center">
                 <HeartCelebration animate={!alreadyComplete} />
-                <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
+                <Title order={3} className={shared.completedTitle}>
+                  Heart Earned!
+                </Title>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>

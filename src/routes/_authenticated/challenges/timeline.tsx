@@ -8,6 +8,10 @@ import { ScratchCard } from "../../../components/ScratchCard";
 import { useProgress } from "../../../lib/ProgressContext";
 import shared from "./shared.module.css";
 
+import headstand from "../../../assets/photos/headstand.png";
+import firstDate from "../../../assets/photos/first-date.jpeg";
+import sigma from "../../../assets/photos/sigma.jpg";
+
 export const Route = createFileRoute("/_authenticated/challenges/timeline")({
   component: TimelinePage,
 });
@@ -15,18 +19,15 @@ export const Route = createFileRoute("/_authenticated/challenges/timeline")({
 const TIMELINE_ITEMS = [
   {
     quote: '"The moment I knew you were different..."',
-    date: "First Meeting",
-    photo: "https://placehold.co/400x300/ffe7e7/ff0309?text=Memory+1",
+    photo: headstand,
   },
   {
-    quote: '"I never thought I could laugh this hard with someone."',
-    date: "Three Months In",
-    photo: "https://placehold.co/400x300/ffe7e7/ff0309?text=Memory+2",
+    quote: '"Our First Date together"',
+    photo: firstDate,
   },
   {
-    quote: '"Home is wherever you are."',
-    date: "Our Favorite Day",
-    photo: "https://placehold.co/400x300/ffe7e7/ff0309?text=Memory+3",
+    quote: '"The moment I fell for you "',
+    photo: sigma,
   },
 ];
 
@@ -58,13 +59,15 @@ function TimelinePage() {
             variant="light"
             color="valentine"
             size="sm"
-            leftSection="←"
-          >
+            leftSection="←">
             Back to Challenges
           </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "timeline" : undefined} />
+        <HeartTracker
+          refreshKey={refreshKey}
+          justCompletedKey={!alreadyComplete && completed ? "timeline" : undefined}
+        />
 
         <Group gap="sm" justify="center">
           <Text className={shared.pageIcon}>✨</Text>
@@ -80,15 +83,24 @@ function TimelinePage() {
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15, duration: 0.4 }}
-              >
+                transition={{ delay: i * 0.15, duration: 0.4 }}>
                 <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
-                    <Text size="xl" fw={600} fs="italic" className={shared.questionText}>
+                    <Text
+                      size="xl"
+                      fw={600}
+                      fs="italic"
+                      ta="center"
+                      className={shared.questionText}>
                       {item.quote}
                     </Text>
                     <Box className={shared.imageWrapper}>
-                      <ScratchCard imageSrc={item.photo} width={400} height={280} onReveal={handleReveal} />
+                      <ScratchCard
+                        imageSrc={item.photo}
+                        width={400}
+                        height={280}
+                        onReveal={handleReveal}
+                      />
                     </Box>
                   </Stack>
                 </Card>
@@ -99,12 +111,17 @@ function TimelinePage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
-          >
-            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
+            transition={{ duration: 0.5, type: "spring" }}>
+            <Card
+              p={{ base: "md", sm: "xl" }}
+              radius="lg"
+              ta="center"
+              className={shared.completedCard}>
               <Stack gap="md" align="center">
                 <HeartCelebration animate={!alreadyComplete} />
-                <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
+                <Title order={3} className={shared.completedTitle}>
+                  Heart Earned!
+                </Title>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>
