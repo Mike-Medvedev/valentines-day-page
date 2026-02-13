@@ -5,7 +5,7 @@
  * Max width: 1200px (covers full viewport on most devices).
  */
 import { readdir } from "node:fs/promises";
-import { join, extname, dirname } from "node:path";
+import { join, extname, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execSync } from "node:child_process";
 
@@ -43,6 +43,13 @@ async function optimizeImage(filePath) {
     }
 
     execSync(`mv "${tempPath}" "${filePath}"`);
+    // Normalize to lowercase extension for Linux/Docker case-sensitivity
+    const baseName = basename(filePath);
+    const lowerName = baseName.replace(/\.[^.]+$/, (m) => m.toLowerCase());
+    if (baseName !== lowerName) {
+      const dir = join(dirname(filePath), "");
+      execSync(`mv "${dir}${baseName}" "${dir}${lowerName}"`);
+    }
     return true;
   } catch (err) {
     try {
