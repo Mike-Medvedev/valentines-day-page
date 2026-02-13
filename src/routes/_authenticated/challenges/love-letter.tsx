@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Box, Card, Stack, Text, Title, Button } from "@mantine/core";
+import { Box, Card, Stack, Text, Title, Button, Group } from "@mantine/core";
 import { motion } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
 import { HeartCelebration } from "../../../components/HeartCelebration";
-import { completeChallenge, getProgress } from "../../../lib/progress";
+import { useProgress } from "../../../lib/ProgressContext";
 import shared from "./shared.module.css";
 
 export const Route = createFileRoute("/_authenticated/challenges/love-letter")({
@@ -23,7 +23,7 @@ const LETTER_PARAGRAPHS = [
 ];
 
 function LoveLetter() {
-  const progress = getProgress();
+  const { progress, completeChallenge } = useProgress();
   const alreadyComplete = progress.loveLetter;
 
   const [completed, setCompleted] = useState(alreadyComplete);
@@ -55,15 +55,12 @@ function LoveLetter() {
 
         <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "loveLetter" : undefined} />
 
-        <Stack gap="xs" align="center">
+        <Group gap="sm" justify="center">
           <Text className={shared.pageIcon}>💌</Text>
-          <Title order={2} ta="center" className={shared.pageTitle}>
+          <Title order={2} className={shared.pageTitle}>
             A Letter For You
           </Title>
-          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
-            Read it with your whole heart
-          </Text>
-        </Stack>
+        </Group>
 
         {!completed ? (
           <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.letterCard}>
@@ -121,7 +118,6 @@ function LoveLetter() {
               <Stack gap="md" align="center">
                 <HeartCelebration animate={!alreadyComplete} />
                 <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
-                <Text style={{ color: "var(--color-text-dimmed)" }}>Thank you for reading my heart out</Text>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>

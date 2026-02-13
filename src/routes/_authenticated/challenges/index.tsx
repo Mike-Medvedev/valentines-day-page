@@ -3,7 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Box, Card, SimpleGrid, Stack, Text, Title, Button, Badge } from "@mantine/core";
 import { motion } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
-import { getProgress, isAllComplete, type ChallengeKey } from "../../../lib/progress";
+import { useProgress } from "../../../lib/ProgressContext";
+import type { ChallengeKey } from "../../../lib/progress";
 import classes from "./index.module.css";
 
 export const Route = createFileRoute("/_authenticated/challenges/")({
@@ -13,46 +14,20 @@ export const Route = createFileRoute("/_authenticated/challenges/")({
 interface ChallengeInfo {
   key: ChallengeKey;
   title: string;
-  description: string;
   icon: string;
   route: string;
 }
 
 const CHALLENGES: ChallengeInfo[] = [
-  {
-    key: "scavengerHunt",
-    title: "Scavenger Hunt",
-    description: "Dig through our emails and texts to answer these questions about us",
-    icon: "🔍",
-    route: "/challenges/scavenger-hunt",
-  },
-  {
-    key: "photoMemory",
-    title: "Photo Memory",
-    description: "How well do you remember our moments? Answer questions about our photos",
-    icon: "📸",
-    route: "/challenges/photo-memory",
-  },
-  {
-    key: "timeline",
-    title: "Our Timeline",
-    description: "Read quotes from our journey and scratch to reveal the memories",
-    icon: "✨",
-    route: "/challenges/timeline",
-  },
-  {
-    key: "loveLetter",
-    title: "Love Letter",
-    description: "A letter from my heart to yours. Read it to claim this heart",
-    icon: "💌",
-    route: "/challenges/love-letter",
-  },
+  { key: "scavengerHunt", title: "Scavenger Hunt", icon: "🔍", route: "/challenges/scavenger-hunt" },
+  { key: "photoMemory", title: "Photo Memory", icon: "📸", route: "/challenges/photo-memory" },
+  { key: "timeline", title: "Our Timeline", icon: "✨", route: "/challenges/timeline" },
+  { key: "loveLetter", title: "Love Letter", icon: "💌", route: "/challenges/love-letter" },
 ];
 
 function ChallengeHub() {
   const [refreshKey] = useState(0);
-  const progress = getProgress();
-  const allComplete = isAllComplete();
+  const { progress, isAllComplete } = useProgress();
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
@@ -61,9 +36,6 @@ function ChallengeHub() {
           <Title order={2} ta="center" className={classes.pageTitle}>
             Your Journey Awaits
           </Title>
-          <Text size="md" ta="center" maw={400} className={classes.subtitle}>
-            Complete each challenge to collect hearts and unlock a special surprise
-          </Text>
         </Stack>
 
         <HeartTracker refreshKey={refreshKey} />
@@ -93,16 +65,11 @@ function ChallengeHub() {
                       Complete
                     </Badge>
                   )}
-                  <Stack gap="sm">
+                  <Stack gap="sm" align="center">
                     <Text className={classes.challengeIcon}>{challenge.icon}</Text>
-                    <div>
-                      <Text fw={700} size="lg" className={classes.challengeTitle}>
-                        {challenge.title}
-                      </Text>
-                      <Text size="sm" mt={4} className={classes.cardDescription}>
-                        {challenge.description}
-                      </Text>
-                    </div>
+                    <Text fw={700} size="lg" ta="center" className={classes.challengeTitle}>
+                      {challenge.title}
+                    </Text>
                   </Stack>
                 </Card>
               </motion.div>
@@ -110,36 +77,24 @@ function ChallengeHub() {
           })}
         </SimpleGrid>
 
-        {allComplete && (
+        {isAllComplete && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, type: "spring" }}
           >
             <Box ta="center" mt="md">
-              <motion.div
-                animate={{
-                  boxShadow: [
-                    `0 0 20px rgba(255, 3, 9, 0.2)`,
-                    `0 0 40px rgba(255, 3, 9, 0.4)`,
-                    `0 0 20px rgba(255, 3, 9, 0.2)`,
-                  ],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className={classes.glowWrap}
+              <Button
+                component={Link}
+                to="/finale"
+                size="lg"
+                color="valentine"
+                radius="xl"
+                px={32}
+                rightSection="🤍"
               >
-                <Button
-                  component={Link}
-                  to="/finale"
-                  size="lg"
-                  color="valentine"
-                  radius="xl"
-                  px={32}
-                  className={classes.unlockButton}
-                >
-                  Unlock Your Surprise
-                </Button>
-              </motion.div>
+                Unlock Your Surprise
+              </Button>
             </Box>
           </motion.div>
         )}

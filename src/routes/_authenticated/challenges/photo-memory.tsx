@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button, Card, Stack, Text, Title, Image, SimpleGrid, Progress, Box } from "@mantine/core";
+import { Button, Card, Stack, Text, Title, Image, SimpleGrid, Progress, Box, Group } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
 import { HeartCelebration } from "../../../components/HeartCelebration";
-import { completeChallenge, getProgress } from "../../../lib/progress";
+import { useProgress } from "../../../lib/ProgressContext";
 import shared from "./shared.module.css";
 
 export const Route = createFileRoute("/_authenticated/challenges/photo-memory")({
@@ -33,7 +33,7 @@ const PHOTO_QUESTIONS = [
 ];
 
 function PhotoMemory() {
-  const progress = getProgress();
+  const { progress, completeChallenge } = useProgress();
   const alreadyComplete = progress.photoMemory;
 
   const [currentQ, setCurrentQ] = useState(0);
@@ -85,15 +85,12 @@ function PhotoMemory() {
 
         <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "photoMemory" : undefined} />
 
-        <Stack gap="xs" align="center">
+        <Group gap="sm" justify="center">
           <Text className={shared.pageIcon}>📸</Text>
-          <Title order={2} ta="center" className={shared.pageTitle}>
+          <Title order={2} className={shared.pageTitle}>
             Photo Memory
           </Title>
-          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
-            How well do you remember our moments together?
-          </Text>
-        </Stack>
+        </Group>
 
         {!completed ? (
           <>
@@ -115,10 +112,6 @@ function PhotoMemory() {
               >
                 <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
-                    <Text size="xs" c="dimmed">
-                      Question {currentQ + 1} of {PHOTO_QUESTIONS.length}
-                    </Text>
-
                     <Box className={shared.imageWrapper}>
                       <Image
                         src={PHOTO_QUESTIONS[currentQ].photo}
@@ -168,18 +161,6 @@ function PhotoMemory() {
                       })}
                     </SimpleGrid>
 
-                    <AnimatePresence>
-                      {showResult && !isCorrect && (
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                          <Text size="sm" c="red" ta="center">Hmm, not that one! Think harder...</Text>
-                        </motion.div>
-                      )}
-                      {showResult && isCorrect && (
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                          <Text size="sm" c="green" ta="center" fw={600}>That's right!</Text>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </Stack>
                 </Card>
               </motion.div>
@@ -195,7 +176,6 @@ function PhotoMemory() {
               <Stack gap="md" align="center">
                 <HeartCelebration animate={!alreadyComplete} />
                 <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
-                <Text style={{ color: "var(--color-text-dimmed)" }}>Your memory of us is as strong as my love for you!</Text>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>

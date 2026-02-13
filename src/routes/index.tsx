@@ -37,63 +37,55 @@ function AuthGatePage() {
 
   return (
     <Box className={classes.pageWrapper}>
-      <Container size={420}>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}>
-          <Stack gap="xl" align="center">
-            <Stack gap="xs" align="center">
-              <Title order={1} ta="center" className={classes.greeting}>
-                Hello Marissa
-              </Title>
+      <Box className={classes.contentArea}>
+        <Container size={420}>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}>
+            <Stack gap="xl" align="center">
+              <Stack gap="xs" align="center">
+                <Title order={1} ta="center" className={classes.greeting}>
+                  Hello Marissa
+                </Title>
+              </Stack>
+              <Stack gap="xs" align="center">
+                <Title order={1} ta="center" className={classes.subtitle}>
+                  Something Special Awaits You. ❤️
+                </Title>
+              </Stack>
+
+              <Box component="label" className={classes.checkboxRow}>
+                <Checkbox
+                  checked={checked}
+                  onChange={handleCheck}
+                  color="valentine"
+                  size="md"
+                  styles={{ input: { cursor: "pointer" } }}
+                />
+                <Text size="sm" fw={500} className={classes.checkboxLabel}>
+                  I confirm that I am a certified Gmail Guzzler
+                </Text>
+              </Box>
+
+              <AnimatePresence>
+                {showCaptcha && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.4 }}>
+                    <CaptchaGrid onSuccess={handleCaptchaSuccess} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </Stack>
-            <Stack gap="xs" align="center">
-              <Title order={1} ta="center" className={classes.subtitle}>
-                Something Special Awaits You. ❤️
-              </Title>
-            </Stack>
-
-            <Box
-              w="100%"
-              className={classes.checkboxRow}
-              data-checked={String(checked)}
-              onClick={() => {
-                const fakeEvent = {
-                  currentTarget: { checked: !checked },
-                } as React.ChangeEvent<HTMLInputElement>;
-                handleCheck(fakeEvent);
-              }}>
-              <Checkbox
-                checked={checked}
-                onChange={handleCheck}
-                color="valentine"
-                size="md"
-                styles={{ input: { cursor: "pointer" } }}
-              />
-              <Text size="sm" fw={500} className={classes.checkboxLabel}>
-                I confirm that I am a certified Gmail Guzzler
-              </Text>
-            </Box>
-
-            <AnimatePresence>
-              {showCaptcha && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.4 }}>
-                  <CaptchaGrid onSuccess={handleCaptchaSuccess} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <Text size="xs" ta="center" maw={300} style={{ color: "var(--color-text-dimmed)" }}>
-              This site is protected by advanced Gmail Guzzler detection technology
-            </Text>
-          </Stack>
-        </motion.div>
-      </Container>
+          </motion.div>
+        </Container>
+      </Box>
+      <Text size="xs" ta="center" className={classes.footer}>
+        This site is protected by advanced Gmail Guzzler detection technology
+      </Text>
     </Box>
   );
 }

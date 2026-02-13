@@ -1,9 +1,20 @@
 .pageWrapper {
   flex: 1;
   display: flex;
+  flex-direction: column;
+}
+
+.contentArea {
+  flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
+}
+
+.footer {
+  padding: 16px;
+  color: var(--color-text-dimmed);
 }
 
 .greeting {
@@ -19,22 +30,20 @@
 }
 
 .checkboxRow {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 20px;
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  transition: all 0.3s ease;
+  padding: 12px 20px;
   cursor: pointer;
+  background: rgba(255, 206, 206, 0.2);
+  border: 1px dashed rgba(255, 3, 9, 0.25);
+  border-radius: 999px;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.checkboxRow[data-checked="false"] {
-  background: var(--color-glass);
-}
-
-.checkboxRow[data-checked="true"] {
-  background: rgba(255, 206, 206, 0.9);
+.checkboxRow:hover {
+  background: rgba(255, 206, 206, 0.35);
+  border-color: rgba(255, 3, 9, 0.35);
 }
 
 .checkboxLabel {
@@ -43,12 +52,16 @@
 }
 
 @media (max-width: $mantine-breakpoint-xs) {
-  .pageWrapper {
+  .contentArea {
     padding: 16px 12px;
   }
 
+  .footer {
+    padding: 12px;
+  }
+
   .checkboxRow {
-    padding: 12px 14px;
     gap: 10px;
+    padding: 10px 16px;
   }
 }
