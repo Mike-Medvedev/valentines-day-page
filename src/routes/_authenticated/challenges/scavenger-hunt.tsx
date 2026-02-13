@@ -12,9 +12,19 @@ export const Route = createFileRoute("/_authenticated/challenges/scavenger-hunt"
 });
 
 const QUESTIONS = [
-  { question: "What was the subject line of the first email I ever sent you?", answer: "hello" },
-  { question: "What did I text you at 2am that one night?", answer: "i miss you" },
-  { question: "What restaurant did I suggest in our emails for our first date?", answer: "olive garden" },
+  {
+    question: "What was the pickup line used to go on our first date from our email chain?",
+    answer:
+      "I might not be a good drawer but I can sketch you and I going out in Norwalk this Thursday?",
+  },
+  {
+    question: "What did you text me that one night where I thought you ghosted me",
+    answer: "I fear I actually gotta ghost ya",
+  },
+  {
+    question: "What was #7 on the list of things I learned about you after our 4th date",
+    answer: "yapper",
+  },
 ];
 
 function ScavengerHunt() {
@@ -54,13 +64,15 @@ function ScavengerHunt() {
             variant="light"
             color="valentine"
             size="sm"
-            leftSection="←"
-          >
+            leftSection="←">
             Back to Challenges
           </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "scavengerHunt" : undefined} />
+        <HeartTracker
+          refreshKey={refreshKey}
+          justCompletedKey={!alreadyComplete && completed ? "scavengerHunt" : undefined}
+        />
 
         <Group gap="sm" justify="center">
           <Text className={shared.pageIcon}>🔍</Text>
@@ -85,8 +97,7 @@ function ScavengerHunt() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              >
+                transition={{ duration: 0.3 }}>
                 <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
                     <Text fw={600} size="lg" className={shared.questionText}>
@@ -95,7 +106,10 @@ function ScavengerHunt() {
                     <TextInput
                       placeholder="Type your answer..."
                       value={answer}
-                      onChange={(e) => { setAnswer(e.currentTarget.value); setError(false); }}
+                      onChange={(e) => {
+                        setAnswer(e.currentTarget.value);
+                        setError(false);
+                      }}
                       onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                       error={error ? "Try again" : undefined}
                     />
@@ -111,9 +125,12 @@ function ScavengerHunt() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
-          >
-            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
+            transition={{ duration: 0.5, type: "spring" }}>
+            <Card
+              p={{ base: "md", sm: "xl" }}
+              radius="lg"
+              ta="center"
+              className={shared.completedCard}>
               <Stack gap="md" align="center">
                 <HeartCelebration animate={!alreadyComplete} />
                 <Title order={3} className={shared.completedTitle}>

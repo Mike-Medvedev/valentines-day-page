@@ -34,8 +34,11 @@ function ChallengeHub() {
       <Stack gap="xl" py="lg">
         <Stack gap="xs" align="center">
           <Title order={2} ta="center" className={classes.pageTitle}>
-            Your Journey Awaits
+            Valentines Day Challenge
           </Title>
+          <Text size="sm" mt={4} ta="center" className={classes.statusText}>
+            Collect all 4 hearts to unlock a surprise
+          </Text>
         </Stack>
 
         <HeartTracker refreshKey={refreshKey} />

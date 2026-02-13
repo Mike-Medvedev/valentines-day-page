@@ -1,0 +1,41 @@
+.notification {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 1000;
+  max-width: 320px;
+}
+
+.content {
+  position: relative;
+  background: var(--color-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--mantine-color-valentine-2);
+  border-radius: var(--mantine-radius-lg);
+  padding: 16px 40px 16px 16px;
+  box-shadow: 0 8px 32px rgba(255, 51, 52, 0.15);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.title {
+  color: var(--color-text);
+}
+
+.message {
+  color: var(--color-text);
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .notification {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+}

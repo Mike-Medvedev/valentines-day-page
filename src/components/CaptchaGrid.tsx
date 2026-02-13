@@ -3,16 +3,26 @@ import { Box, SimpleGrid, Text, Button, Image, Stack, Paper } from "@mantine/cor
 import { motion, AnimatePresence } from "framer-motion";
 import classes from "./CaptchaGrid.module.css";
 
+import marissaFunnel from "../assets/photos/marissa-funnel.jpeg";
+import marissaHike from "../assets/photos/marissa-hike.jpeg";
+import marissaPot from "../assets/photos/marissa-pot.jpeg";
+import marissaSplit from "../assets/photos/marissa-split.jpeg";
+import metalDetector from "../assets/photos/metal-detector.webp";
+import pomegranite from "../assets/photos/pomegranite.jpg";
+import sandwhich from "../assets/photos/sandwhich.jpeg";
+import ski from "../assets/photos/ski.jpg";
+import texas from "../assets/photos/texas.webp";
+
 const CAPTCHA_IMAGES = [
-  { id: 1, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=1", isCorrect: true },
-  { id: 2, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=2", isCorrect: false },
-  { id: 3, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=3", isCorrect: true },
-  { id: 4, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=4", isCorrect: false },
-  { id: 5, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=5", isCorrect: false },
-  { id: 6, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=6", isCorrect: true },
-  { id: 7, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=7", isCorrect: false },
-  { id: 8, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=8", isCorrect: false },
-  { id: 9, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=9", isCorrect: true },
+  { id: 1, src: marissaFunnel, isCorrect: true },
+  { id: 2, src: marissaHike, isCorrect: true },
+  { id: 3, src: marissaPot, isCorrect: true },
+  { id: 4, src: marissaSplit, isCorrect: true },
+  { id: 5, src: metalDetector, isCorrect: false },
+  { id: 6, src: pomegranite, isCorrect: false },
+  { id: 7, src: sandwhich, isCorrect: false },
+  { id: 8, src: ski, isCorrect: false },
+  { id: 9, src: texas, isCorrect: false },
 ];
 
 interface CaptchaGridProps {

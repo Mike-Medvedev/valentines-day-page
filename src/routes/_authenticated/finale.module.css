@@ -9,10 +9,13 @@
 }
 
 .confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .questionCard {
@@ -32,6 +35,11 @@
 
 .heartPulse {
   font-size: clamp(48px, 10vw, 64px);
+}
+
+.photoImage {
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .questionTitle {
