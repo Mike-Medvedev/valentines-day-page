@@ -1,29 +1,50 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 
-interface Heart {
+const HEART_COLORS = ["#ff3334", "#ff6465", "#ff9a9b", "#ffcece", "#ff0309", "#cc0000"];
+const EMOJIS = ["♥", "♥", "♥", "🌻", "🌻"]; // ~60% hearts, ~40% sunflowers
+
+interface Particle {
   id: number;
   x: number;
+  y: number;
+  emoji: string;
   size: number;
-  duration: number;
+  swayAmount: number;
+  swayDuration: number;
+  bobAmount: number;
+  bobDuration: number;
+  spinSpeed: number;
   delay: number;
   opacity: number;
+  color: string;
 }
 
 interface FloatingHeartsProps {
   count?: number;
 }
 
-export function FloatingHearts({ count = 15 }: FloatingHeartsProps) {
-  const hearts = useMemo<Heart[]>(() => {
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      size: 12 + Math.random() * 16,
-      duration: 8 + Math.random() * 12,
-      delay: Math.random() * 8,
-      opacity: 0.06 + Math.random() * 0.1,
-    }));
+export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
+  const particles = useMemo<Particle[]>(() => {
+    return Array.from({ length: count }, (_, i) => {
+      const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+      const isSunflower = emoji === "🌻";
+      return {
+        id: i,
+        x: Math.random() * 95,
+        y: Math.random() * 95,
+        emoji,
+        size: isSunflower ? 20 + Math.random() * 16 : 14 + Math.random() * 18,
+        swayAmount: 3 + Math.random() * 5,
+        swayDuration: 3 + Math.random() * 3,
+        bobAmount: 2 + Math.random() * 4,
+        bobDuration: 2 + Math.random() * 3,
+        spinSpeed: 6 + Math.random() * 8,
+        delay: Math.random() * 4,
+        opacity: 0.2 + Math.random() * 0.25,
+        color: HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)],
+      };
+    });
   }, [count]);
 
   return (
@@ -39,39 +60,48 @@ export function FloatingHearts({ count = 15 }: FloatingHeartsProps) {
         overflow: "hidden",
       }}
     >
-      {hearts.map((heart) => (
+      {particles.map((p) => (
         <motion.div
-          key={heart.id}
+          key={p.id}
           initial={{
-            x: `${heart.x}vw`,
-            y: "110vh",
+            x: `${p.x}vw`,
+            y: `${p.y}vh`,
             opacity: 0,
-            rotate: -20 + Math.random() * 40,
+            scale: 0.5,
           }}
           animate={{
-            y: "-10vh",
-            opacity: [0, heart.opacity, heart.opacity, 0],
-            rotate: [-20, 20, -20],
+            opacity: [0, p.opacity, p.opacity, p.opacity, 0],
+            scale: [0.5, 1, 1, 1, 0.5],
             x: [
-              `${heart.x}vw`,
-              `${heart.x + (Math.random() - 0.5) * 6}vw`,
-              `${heart.x + (Math.random() - 0.5) * 6}vw`,
-              `${heart.x}vw`,
+              `${p.x}vw`,
+              `${p.x + p.swayAmount}vw`,
+              `${p.x - p.swayAmount}vw`,
+              `${p.x + p.swayAmount * 0.5}vw`,
+              `${p.x}vw`,
             ],
+            y: [
+              `${p.y}vh`,
+              `${p.y - p.bobAmount}vh`,
+              `${p.y + p.bobAmount}vh`,
+              `${p.y - p.bobAmount * 0.5}vh`,
+              `${p.y}vh`,
+            ],
+            rotate: [0, 15, -15, 10, -10, 0],
           }}
           transition={{
-            duration: heart.duration,
-            delay: heart.delay,
+            duration: p.swayDuration + p.bobDuration + 4,
+            delay: p.delay,
             repeat: Infinity,
-            ease: "linear",
+            ease: "easeInOut",
           }}
           style={{
             position: "absolute",
-            fontSize: heart.size,
+            fontSize: p.size,
+            color: p.emoji === "♥" ? p.color : undefined,
             userSelect: "none",
           }}
         >
-          ♥
+          {p.emoji}
         </motion.div>
       ))}
     </div>

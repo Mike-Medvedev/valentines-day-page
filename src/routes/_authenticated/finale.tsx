@@ -49,7 +49,7 @@ function FinalePage() {
           height={windowHeight}
           recycle={true}
           numberOfPieces={300}
-          colors={["#BE3455", "#E8446A", "#D4A574", "#F5E6E0", "#ff6b8a", "#FFD700"]}
+          colors={["#ff3334", "#ff6465", "#ff9a9b", "#ffcece", "#ff0309", "#cc0000"]}
           style={{ position: "fixed", top: 0, left: 0, zIndex: 1000 }}
         />
       )}
@@ -88,7 +88,7 @@ function FinalePage() {
                 <Title
                   order={1}
                   style={{
-                    color: "#2C1810",
+                    color: "#3d0d0d",
                     fontSize: "clamp(1.6rem, 4vw, 2.2rem)",
                     lineHeight: 1.3,
                   }}
@@ -118,7 +118,7 @@ function FinalePage() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     size="xl"
-                    color="rose"
+                    color="valentine"
                     px={48}
                     onClick={handleYes}
                     style={{
@@ -186,7 +186,7 @@ function FinalePage() {
                   <Title
                     order={1}
                     style={{
-                      color: "#BE3455",
+                      color: "#ff0309",
                       fontSize: "clamp(1.8rem, 5vw, 2.5rem)",
                     }}
                   >
@@ -195,7 +195,7 @@ function FinalePage() {
                   <Text
                     size="lg"
                     style={{
-                      color: "#2C1810",
+                      color: "#3d0d0d",
                       lineHeight: 1.8,
                       fontFamily: '"Playfair Display", Georgia, serif',
                     }}
@@ -219,7 +219,7 @@ function FinalePage() {
                   component={Link}
                   to="/challenges"
                   variant="subtle"
-                  color="rose"
+                  color="valentine"
                   size="sm"
                   mt="md"
                 >

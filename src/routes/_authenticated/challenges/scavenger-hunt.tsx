@@ -95,7 +95,7 @@ function ScavengerHunt() {
           <Title
             order={2}
             ta="center"
-            style={{ color: "#2C1810" }}
+            style={{ color: "#3d0d0d" }}
           >
             Scavenger Hunt
           </Title>
@@ -108,7 +108,7 @@ function ScavengerHunt() {
           <>
             <Progress
               value={((currentQ) / QUESTIONS.length) * 100}
-              color="rose"
+              color="valentine"
               size="sm"
               radius="xl"
               animated
@@ -139,7 +139,7 @@ function ScavengerHunt() {
                       size="lg"
                       style={{
                         fontFamily: '"Playfair Display", Georgia, serif',
-                        color: "#2C1810",
+                        color: "#3d0d0d",
                       }}
                     >
                       {QUESTIONS[currentQ].question}
@@ -158,13 +158,13 @@ function ScavengerHunt() {
                       error={error ? "Not quite... try again!" : undefined}
                       styles={{
                         input: {
-                          borderColor: "#e8ddd6",
-                          "&:focus": { borderColor: "#BE3455" },
+                          borderColor: "#ffcece",
+                          "&:focus": { borderColor: "#ff3334" },
                         },
                       }}
                     />
                     <Button
-                      color="rose"
+                      color="valentine"
                       onClick={handleSubmit}
                       disabled={!answer.trim()}
                     >
@@ -186,12 +186,12 @@ function ScavengerHunt() {
               radius="lg"
               ta="center"
               style={{
-                background: "linear-gradient(135deg, #FFF8F0, #FFF0F3)",
+                background: "linear-gradient(135deg, #ffe7e7, #ffcece)",
               }}
             >
               <Stack gap="md" align="center">
                 <Text style={{ fontSize: 48 }}>❤️</Text>
-                <Title order={3} style={{ color: "#2C1810" }}>
+                <Title order={3} style={{ color: "#3d0d0d" }}>
                   Heart Earned!
                 </Title>
                 <Text c="dimmed">
@@ -200,7 +200,7 @@ function ScavengerHunt() {
                 <Button
                   component={Link}
                   to="/challenges"
-                  color="rose"
+                  color="valentine"
                   variant="light"
                   mt="sm"
                 >

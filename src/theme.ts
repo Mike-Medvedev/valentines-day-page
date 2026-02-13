@@ -1,37 +1,23 @@
 import { createTheme } from "@mantine/core";
 import type { MantineColorsTuple } from "@mantine/core";
 
-const rose: MantineColorsTuple = [
-  "#fff0f3",
-  "#ffdfe5",
-  "#ffbcc9",
-  "#ff96ab",
-  "#f67391",
-  "#eb5c7f",
-  "#BE3455",
-  "#a82a4a",
-  "#8f2140",
-  "#761836",
-];
-
-const gold: MantineColorsTuple = [
-  "#fdf6ef",
-  "#f5e8d8",
-  "#edd5b6",
-  "#e4c08f",
-  "#D4A574",
-  "#c69560",
-  "#b8854d",
-  "#9a6e3e",
-  "#7d5831",
-  "#604325",
+const valentine: MantineColorsTuple = [
+  "#ffe7e7",
+  "#ffcece",
+  "#ff9a9b",
+  "#ff6465",
+  "#ff3334",
+  "#ff1819",
+  "#ff0309",
+  "#e40000",
+  "#cc0000",
+  "#b30000",
 ];
 
 export const theme = createTheme({
-  primaryColor: "rose",
+  primaryColor: "valentine",
   colors: {
-    rose,
-    gold,
+    valentine,
   },
   fontFamily: '"DM Sans", system-ui, -apple-system, sans-serif',
   headings: {
@@ -54,7 +40,7 @@ export const theme = createTheme({
     Card: {
       styles: {
         root: {
-          boxShadow: "0 2px 16px rgba(44, 24, 16, 0.06)",
+          boxShadow: "0 2px 16px rgba(179, 0, 0, 0.08)",
           border: "none",
         },
       },
@@ -62,7 +48,7 @@ export const theme = createTheme({
     Paper: {
       styles: {
         root: {
-          boxShadow: "0 2px 12px rgba(44, 24, 16, 0.06)",
+          boxShadow: "0 2px 12px rgba(179, 0, 0, 0.08)",
         },
       },
     },

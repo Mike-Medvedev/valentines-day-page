@@ -1,28 +1,20 @@
 import { useState, useMemo } from "react";
-import {
-  Box,
-  SimpleGrid,
-  Text,
-  Button,
-  Image,
-  Stack,
-  Paper,
-} from "@mantine/core";
+import { Box, SimpleGrid, Text, Button, Image, Stack, Paper } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Placeholder images — replace these paths with your actual images
 // Put your gf's photos in src/assets/captcha/ and import them,
 // or use URLs. The "correct" ones should be photos of your gf.
 const CAPTCHA_IMAGES = [
-  { id: 1, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=1", isCorrect: true },
-  { id: 2, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=2", isCorrect: false },
-  { id: 3, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=3", isCorrect: true },
-  { id: 4, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=4", isCorrect: false },
-  { id: 5, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=5", isCorrect: false },
-  { id: 6, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=6", isCorrect: true },
-  { id: 7, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=7", isCorrect: false },
-  { id: 8, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=8", isCorrect: false },
-  { id: 9, src: "https://placehold.co/200x200/F5E6E0/BE3455?text=9", isCorrect: true },
+  { id: 1, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=1", isCorrect: true },
+  { id: 2, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=2", isCorrect: false },
+  { id: 3, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=3", isCorrect: true },
+  { id: 4, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=4", isCorrect: false },
+  { id: 5, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=5", isCorrect: false },
+  { id: 6, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=6", isCorrect: true },
+  { id: 7, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=7", isCorrect: false },
+  { id: 8, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=8", isCorrect: false },
+  { id: 9, src: "https://placehold.co/200x200/ffe7e7/ff0309?text=9", isCorrect: true },
 ];
 
 interface CaptchaGridProps {
@@ -59,12 +51,9 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
   };
 
   const handleVerify = () => {
-    const correctIds = new Set(
-      shuffledImages.filter((img) => img.isCorrect).map((img) => img.id),
-    );
+    const correctIds = new Set(shuffledImages.filter((img) => img.isCorrect).map((img) => img.id));
     const isCorrect =
-      selected.size === correctIds.size &&
-      [...selected].every((id) => correctIds.has(id));
+      selected.size === correctIds.size && [...selected].every((id) => correctIds.has(id));
 
     if (isCorrect) {
       setSuccess(true);
@@ -79,26 +68,23 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-    >
+      transition={{ duration: 0.4, ease: "easeOut" }}>
       <Paper
         p="lg"
         radius="lg"
         style={{
           background: "#fff",
-          border: "2px solid #BE3455",
+          border: "2px solid #ff3334",
           overflow: "hidden",
-        }}
-      >
+        }}>
         <Stack gap="md">
           <Box
             style={{
-              background: "#BE3455",
+              background: "#ff3334",
               margin: "calc(var(--mantine-spacing-lg) * -1)",
               marginBottom: 0,
               padding: "16px 20px",
-            }}
-          >
+            }}>
             <Text c="white" fw={600} size="sm">
               Select all images of the most beautiful person in the world
             </Text>
@@ -110,19 +96,15 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
                 key={img.id}
                 whileTap={{ scale: 0.95 }}
                 style={{ position: "relative", cursor: "pointer" }}
-                onClick={() => toggleSelection(img.id)}
-              >
+                onClick={() => toggleSelection(img.id)}>
                 <Box
                   style={{
                     position: "relative",
                     borderRadius: 8,
                     overflow: "hidden",
-                    border: selected.has(img.id)
-                      ? "3px solid #BE3455"
-                      : "3px solid transparent",
+                    border: selected.has(img.id) ? "3px solid #ff3334" : "3px solid transparent",
                     transition: "border-color 0.2s ease",
-                  }}
-                >
+                  }}>
                   <Image
                     src={img.src}
                     alt={`captcha-${img.id}`}
@@ -147,15 +129,14 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
                           width: 24,
                           height: 24,
                           borderRadius: "50%",
-                          background: "#BE3455",
+                          background: "#ff3334",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           color: "white",
                           fontSize: 14,
                           fontWeight: 700,
-                        }}
-                      >
+                        }}>
                         ✓
                       </motion.div>
                     )}
@@ -170,8 +151,7 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-              >
+                exit={{ opacity: 0, height: 0 }}>
                 <Text size="sm" c="red" ta="center">
                   Hmm, try again! You should know this...
                 </Text>
@@ -181,8 +161,7 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-              >
+                exit={{ opacity: 0, height: 0 }}>
                 <Text size="sm" c="green" ta="center" fw={600}>
                   That's right! Opening the door...
                 </Text>
@@ -192,11 +171,10 @@ export function CaptchaGrid({ onSuccess }: CaptchaGridProps) {
 
           <Button
             fullWidth
-            color="rose"
+            color="valentine"
             size="md"
             onClick={handleVerify}
-            disabled={selected.size === 0 || success}
-          >
+            disabled={selected.size === 0 || success}>
             {success ? "Verified!" : "Verify"}
           </Button>
         </Stack>

@@ -23,17 +23,17 @@ const TIMELINE_ITEMS = [
   {
     quote: '"The moment I knew you were different..."',
     date: "First Meeting",
-    photo: "https://placehold.co/400x300/F5E6E0/BE3455?text=Memory+1",
+    photo: "https://placehold.co/400x300/ffe7e7/ff0309?text=Memory+1",
   },
   {
     quote: '"I never thought I could laugh this hard with someone."',
     date: "Three Months In",
-    photo: "https://placehold.co/400x300/F5E6E0/BE3455?text=Memory+2",
+    photo: "https://placehold.co/400x300/ffe7e7/ff0309?text=Memory+2",
   },
   {
     quote: '"Home is wherever you are."',
     date: "Our Favorite Day",
-    photo: "https://placehold.co/400x300/F5E6E0/BE3455?text=Memory+3",
+    photo: "https://placehold.co/400x300/ffe7e7/ff0309?text=Memory+3",
   },
 ];
 
@@ -79,7 +79,7 @@ function TimelinePage() {
 
         <Stack gap="xs" align="center">
           <Text style={{ fontSize: 40 }}>✨</Text>
-          <Title order={2} ta="center" style={{ color: "#2C1810" }}>
+          <Title order={2} ta="center" style={{ color: "#3d0d0d" }}>
             Our Timeline
           </Title>
           <Text size="sm" c="dimmed" ta="center" maw={400}>
@@ -120,7 +120,7 @@ function TimelinePage() {
                       fs="italic"
                       style={{
                         fontFamily: '"Playfair Display", Georgia, serif',
-                        color: "#2C1810",
+                        color: "#3d0d0d",
                       }}
                     >
                       {item.quote}
@@ -149,12 +149,12 @@ function TimelinePage() {
               radius="lg"
               ta="center"
               style={{
-                background: "linear-gradient(135deg, #FFF8F0, #FFF0F3)",
+                background: "linear-gradient(135deg, #ffe7e7, #ffcece)",
               }}
             >
               <Stack gap="md" align="center">
                 <Text style={{ fontSize: 48 }}>❤️</Text>
-                <Title order={3} style={{ color: "#2C1810" }}>
+                <Title order={3} style={{ color: "#3d0d0d" }}>
                   Heart Earned!
                 </Title>
                 <Text c="dimmed">
@@ -163,7 +163,7 @@ function TimelinePage() {
                 <Button
                   component={Link}
                   to="/challenges"
-                  color="rose"
+                  color="valentine"
                   variant="light"
                   mt="sm"
                 >

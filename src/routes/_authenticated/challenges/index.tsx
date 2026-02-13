@@ -76,7 +76,7 @@ function ChallengeHub() {
           <Title
             order={2}
             ta="center"
-            style={{ color: "#2C1810", lineHeight: 1.2 }}
+            style={{ color: "#3d0d0d", lineHeight: 1.2 }}
           >
             Your Journey Awaits
           </Title>
@@ -109,12 +109,12 @@ function ChallengeHub() {
                   radius="lg"
                   style={{
                     background: completed
-                      ? "linear-gradient(135deg, #FFF8F0, #FFF0F3)"
+                      ? "linear-gradient(135deg, #ffe7e7, #ffcece)"
                       : "rgba(255, 255, 255, 0.85)",
                     backdropFilter: "blur(8px)",
                     border: completed
-                      ? "2px solid #D4A574"
-                      : "1px solid rgba(232, 221, 214, 0.6)",
+                      ? "2px solid #ff9a9b"
+                      : "1px solid rgba(255, 206, 206, 0.6)",
                     cursor: "pointer",
                     transition: "all 0.3s ease",
                     textDecoration: "none",
@@ -125,14 +125,14 @@ function ChallengeHub() {
                     root: {
                       "&:hover": {
                         transform: "translateY(-2px)",
-                        boxShadow: "0 8px 24px rgba(190, 52, 85, 0.12)",
+                        boxShadow: "0 8px 24px rgba(255, 3, 9, 0.12)",
                       },
                     },
                   }}
                 >
                   {completed && (
                     <Badge
-                      color="gold"
+                      color="valentine"
                       variant="filled"
                       size="sm"
                       style={{
@@ -153,7 +153,7 @@ function ChallengeHub() {
                         style={{
                           fontFamily:
                             '"Playfair Display", Georgia, serif',
-                          color: "#2C1810",
+                          color: "#3d0d0d",
                         }}
                       >
                         {challenge.title}
@@ -179,9 +179,9 @@ function ChallengeHub() {
               <motion.div
                 animate={{
                   boxShadow: [
-                    "0 0 20px rgba(190, 52, 85, 0.2)",
-                    "0 0 40px rgba(190, 52, 85, 0.4)",
-                    "0 0 20px rgba(190, 52, 85, 0.2)",
+                    "0 0 20px rgba(255, 3, 9, 0.2)",
+                    "0 0 40px rgba(255, 3, 9, 0.4)",
+                    "0 0 20px rgba(255, 3, 9, 0.2)",
                   ],
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -191,7 +191,7 @@ function ChallengeHub() {
                   component={Link}
                   to="/finale"
                   size="xl"
-                  color="rose"
+                  color="valentine"
                   radius="xl"
                   px={48}
                   style={{

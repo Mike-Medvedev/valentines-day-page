@@ -21,14 +21,8 @@ html {
 
 body {
   min-height: 100dvh;
-  background: linear-gradient(
-    170deg,
-    #fff8f0 0%,
-    #fdf2ec 30%,
-    #f5e6e0 70%,
-    #f0d8d0 100%
-  );
-  color: #2c1810;
+  background: #ffcece;
+  color: #3d0d0d;
   overflow-x: hidden;
 }
 
@@ -40,8 +34,8 @@ body {
 
 /* Selection color */
 ::selection {
-  background: rgba(190, 52, 85, 0.2);
-  color: #2c1810;
+  background: rgba(255, 3, 9, 0.25);
+  color: #3d0d0d;
 }
 
 /* Scrollbar styling */
@@ -54,10 +48,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(190, 52, 85, 0.2);
+  background: rgba(255, 3, 9, 0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(190, 52, 85, 0.35);
+  background: rgba(255, 3, 9, 0.4);
 }

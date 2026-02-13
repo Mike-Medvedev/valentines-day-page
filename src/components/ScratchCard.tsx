@@ -33,9 +33,9 @@ export function ScratchCard({
 
     // Create a soft overlay
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, "#D4A574");
-    gradient.addColorStop(0.5, "#BE3455");
-    gradient.addColorStop(1, "#D4A574");
+    gradient.addColorStop(0, "#ff6465");
+    gradient.addColorStop(0.5, "#ff0309");
+    gradient.addColorStop(1, "#ff6465");
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -194,7 +194,7 @@ export function ScratchCard({
             position: "absolute",
             bottom: 12,
             right: 12,
-            background: "rgba(190, 52, 85, 0.9)",
+            background: "rgba(255, 3, 9, 0.9)",
             color: "white",
             padding: "6px 12px",
             borderRadius: 20,

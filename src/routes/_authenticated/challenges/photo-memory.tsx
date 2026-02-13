@@ -25,19 +25,19 @@ export const Route = createFileRoute(
 // Replace with your actual photos and questions!
 const PHOTO_QUESTIONS = [
   {
-    photo: "https://placehold.co/600x400/F5E6E0/BE3455?text=Our+Photo+1",
+    photo: "https://placehold.co/600x400/ffe7e7/ff0309?text=Our+Photo+1",
     question: "Where was this photo taken?",
     options: ["The park", "The beach", "The restaurant", "At home"],
     correctIndex: 1,
   },
   {
-    photo: "https://placehold.co/600x400/F5E6E0/BE3455?text=Our+Photo+2",
+    photo: "https://placehold.co/600x400/ffe7e7/ff0309?text=Our+Photo+2",
     question: "What were we celebrating in this photo?",
     options: ["Birthday", "Anniversary", "Just because", "New Year"],
     correctIndex: 2,
   },
   {
-    photo: "https://placehold.co/600x400/F5E6E0/BE3455?text=Our+Photo+3",
+    photo: "https://placehold.co/600x400/ffe7e7/ff0309?text=Our+Photo+3",
     question: "Who took this photo?",
     options: ["You", "Me", "A stranger", "Timer"],
     correctIndex: 3,
@@ -103,7 +103,7 @@ function PhotoMemory() {
 
         <Stack gap="xs" align="center">
           <Text style={{ fontSize: 40 }}>📸</Text>
-          <Title order={2} ta="center" style={{ color: "#2C1810" }}>
+          <Title order={2} ta="center" style={{ color: "#3d0d0d" }}>
             Photo Memory
           </Title>
           <Text size="sm" c="dimmed" ta="center" maw={400}>
@@ -115,7 +115,7 @@ function PhotoMemory() {
           <>
             <Progress
               value={(currentQ / PHOTO_QUESTIONS.length) * 100}
-              color="rose"
+              color="valentine"
               size="sm"
               radius="xl"
               animated
@@ -157,7 +157,7 @@ function PhotoMemory() {
                       size="lg"
                       style={{
                         fontFamily: '"Playfair Display", Georgia, serif',
-                        color: "#2C1810",
+                        color: "#3d0d0d",
                       }}
                     >
                       {PHOTO_QUESTIONS[currentQ].question}
@@ -166,7 +166,7 @@ function PhotoMemory() {
                     <SimpleGrid cols={2} spacing="sm">
                       {PHOTO_QUESTIONS[currentQ].options.map((option, idx) => {
                         let bg = "rgba(255, 255, 255, 0.9)";
-                        let borderColor = "#e8ddd6";
+                        let borderColor = "#ffcece";
 
                         if (showResult && selectedOption === idx) {
                           if (isCorrect) {
@@ -190,7 +190,7 @@ function PhotoMemory() {
                               style={{
                                 background: bg,
                                 borderColor,
-                                color: "#2C1810",
+                                color: "#3d0d0d",
                                 transition: "all 0.2s ease",
                                 whiteSpace: "normal",
                                 textAlign: "center",
@@ -243,12 +243,12 @@ function PhotoMemory() {
               radius="lg"
               ta="center"
               style={{
-                background: "linear-gradient(135deg, #FFF8F0, #FFF0F3)",
+                background: "linear-gradient(135deg, #ffe7e7, #ffcece)",
               }}
             >
               <Stack gap="md" align="center">
                 <Text style={{ fontSize: 48 }}>❤️</Text>
-                <Title order={3} style={{ color: "#2C1810" }}>
+                <Title order={3} style={{ color: "#3d0d0d" }}>
                   Heart Earned!
                 </Title>
                 <Text c="dimmed">
@@ -257,7 +257,7 @@ function PhotoMemory() {
                 <Button
                   component={Link}
                   to="/challenges"
-                  color="rose"
+                  color="valentine"
                   variant="light"
                   mt="sm"
                 >

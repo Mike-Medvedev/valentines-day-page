@@ -70,7 +70,7 @@ function LoveLetter() {
 
         <Stack gap="xs" align="center">
           <Text style={{ fontSize: 40 }}>💌</Text>
-          <Title order={2} ta="center" style={{ color: "#2C1810" }}>
+          <Title order={2} ta="center" style={{ color: "#3d0d0d" }}>
             A Letter For You
           </Title>
           <Text size="sm" c="dimmed" ta="center" maw={400}>
@@ -84,9 +84,9 @@ function LoveLetter() {
             radius="lg"
             style={{
               background:
-                "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,248,240,0.95))",
+                "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,231,231,0.95))",
               backdropFilter: "blur(8px)",
-              border: "1px solid #e8ddd6",
+              border: "1px solid #ffcece",
             }}
           >
             <Stack gap="lg">
@@ -110,7 +110,7 @@ function LoveLetter() {
                         i === 0 || i >= LETTER_PARAGRAPHS.length - 2
                           ? '"Playfair Display", Georgia, serif'
                           : undefined,
-                      color: "#2C1810",
+                      color: "#3d0d0d",
                       lineHeight: 1.8,
                       whiteSpace: "pre-line",
                     }}
@@ -130,7 +130,7 @@ function LoveLetter() {
                 >
                   <Box ta="center" mt="md">
                     <Button
-                      color="rose"
+                      color="valentine"
                       size="md"
                       onClick={handleAcknowledge}
                     >
@@ -152,19 +152,19 @@ function LoveLetter() {
               radius="lg"
               ta="center"
               style={{
-                background: "linear-gradient(135deg, #FFF8F0, #FFF0F3)",
+                background: "linear-gradient(135deg, #ffe7e7, #ffcece)",
               }}
             >
               <Stack gap="md" align="center">
                 <Text style={{ fontSize: 48 }}>❤️</Text>
-                <Title order={3} style={{ color: "#2C1810" }}>
+                <Title order={3} style={{ color: "#3d0d0d" }}>
                   Heart Earned!
                 </Title>
                 <Text c="dimmed">Thank you for reading my heart out</Text>
                 <Button
                   component={Link}
                   to="/challenges"
-                  color="rose"
+                  color="valentine"
                   variant="light"
                   mt="sm"
                 >
