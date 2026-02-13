@@ -1,0 +1,62 @@
+/* Shared styles for all challenge pages */
+
+.pageIcon {
+  font-size: 40px;
+}
+
+.pageTitle {
+  color: var(--color-text);
+}
+
+.glassCard {
+  background: var(--color-glass);
+  backdrop-filter: blur(8px);
+}
+
+.questionText {
+  font-family: var(--mantine-font-family-headings);
+  color: var(--color-text);
+}
+
+.completedCard {
+  background: var(--color-completed-gradient);
+}
+
+.completedIcon {
+  font-size: 48px;
+}
+
+.completedTitle {
+  color: var(--color-text);
+}
+
+.letterSpaced {
+  letter-spacing: 0.08em;
+}
+
+.imageWrapper {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.optionButton {
+  transition: all 0.2s ease;
+  white-space: normal;
+  text-align: center;
+}
+
+.letterCard {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 231, 231, 0.95)
+  );
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--mantine-color-valentine-1);
+}
+
+.letterText {
+  color: var(--color-text);
+  line-height: 1.8;
+  white-space: pre-line;
+}

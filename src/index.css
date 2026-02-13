@@ -5,6 +5,23 @@
 @import "@fontsource/dm-sans/600.css";
 @import "@fontsource/dm-sans/700.css";
 
+:root {
+  --color-text: #3d0d0d;
+  --color-text-dimmed: #7a3030;
+  --color-glass: rgba(255, 255, 255, 0.85);
+  --color-glass-strong: rgba(255, 255, 255, 0.9);
+  --color-glass-strongest: rgba(255, 255, 255, 0.95);
+  --color-border: var(--mantine-color-valentine-1);
+  --color-border-subtle: rgba(255, 206, 206, 0.6);
+  --color-glow: rgba(255, 3, 9, 0.12);
+  --color-glow-strong: rgba(255, 3, 9, 0.4);
+  --color-completed-gradient: linear-gradient(
+    135deg,
+    var(--mantine-color-valentine-0),
+    var(--mantine-color-valentine-1)
+  );
+}
+
 *,
 *::before,
 *::after {
@@ -21,8 +38,8 @@ html {
 
 body {
   min-height: 100dvh;
-  background: #ffcece;
-  color: #3d0d0d;
+  background: var(--mantine-color-valentine-1);
+  color: var(--color-text);
   overflow-x: hidden;
 }
 
@@ -32,13 +49,11 @@ body {
   flex-direction: column;
 }
 
-/* Selection color */
 ::selection {
   background: rgba(255, 3, 9, 0.25);
-  color: #3d0d0d;
+  color: var(--color-text);
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -53,5 +68,5 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 3, 9, 0.4);
+  background: var(--color-glow-strong);
 }

@@ -1,8 +1,10 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { valentine } from "../theme";
+import classes from "./FloatingHearts.module.css";
 
-const HEART_COLORS = ["#ff3334", "#ff6465", "#ff9a9b", "#ffcece", "#ff0309", "#cc0000"];
-const EMOJIS = ["♥", "♥", "♥", "🌻", "🌻"]; // ~60% hearts, ~40% sunflowers
+const HEART_COLORS = [valentine[4], valentine[3], valentine[2], valentine[1], valentine[6], valentine[8]];
+const EMOJIS = ["♥", "♥", "♥", "🌻", "🌻"];
 
 interface Particle {
   id: number;
@@ -48,27 +50,12 @@ export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
   }, [count]);
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
-        zIndex: 0,
-        overflow: "hidden",
-      }}
-    >
+    <div className={classes.container}>
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          initial={{
-            x: `${p.x}vw`,
-            y: `${p.y}vh`,
-            opacity: 0,
-            scale: 0.5,
-          }}
+          className={classes.particle}
+          initial={{ x: `${p.x}vw`, y: `${p.y}vh`, opacity: 0, scale: 0.5 }}
           animate={{
             opacity: [0, p.opacity, p.opacity, p.opacity, 0],
             scale: [0.5, 1, 1, 1, 0.5],
@@ -94,12 +81,7 @@ export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          style={{
-            position: "absolute",
-            fontSize: p.size,
-            color: p.emoji === "♥" ? p.color : undefined,
-            userSelect: "none",
-          }}
+          style={{ fontSize: p.size, color: p.emoji === "♥" ? p.color : undefined }}
         >
           {p.emoji}
         </motion.div>

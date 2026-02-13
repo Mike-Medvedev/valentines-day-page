@@ -1,0 +1,53 @@
+.pageTitle {
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.challengeCard {
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.challengeCard[data-completed="false"] {
+  background: var(--color-glass);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.challengeCard[data-completed="true"] {
+  background: var(--color-completed-gradient);
+  border: 2px solid var(--mantine-color-valentine-2);
+}
+
+.challengeCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--color-glow);
+}
+
+.completeBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.challengeIcon {
+  font-size: 36px;
+}
+
+.challengeTitle {
+  font-family: var(--mantine-font-family-headings);
+  color: var(--color-text);
+}
+
+.unlockButton {
+  font-size: 18px;
+  font-family: var(--mantine-font-family-headings);
+}
+
+.glowWrap {
+  display: inline-block;
+  border-radius: 999px;
+}
