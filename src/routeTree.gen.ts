@@ -9,38 +9,134 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedFinaleRouteImport } from './routes/_authenticated/finale'
+import { Route as AuthenticatedChallengesIndexRouteImport } from './routes/_authenticated/challenges/index'
+import { Route as AuthenticatedChallengesTimelineRouteImport } from './routes/_authenticated/challenges/timeline'
+import { Route as AuthenticatedChallengesScavengerHuntRouteImport } from './routes/_authenticated/challenges/scavenger-hunt'
+import { Route as AuthenticatedChallengesPhotoMemoryRouteImport } from './routes/_authenticated/challenges/photo-memory'
+import { Route as AuthenticatedChallengesLoveLetterRouteImport } from './routes/_authenticated/challenges/love-letter'
 
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedFinaleRoute = AuthenticatedFinaleRouteImport.update({
+  id: '/finale',
+  path: '/finale',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedChallengesIndexRoute =
+  AuthenticatedChallengesIndexRouteImport.update({
+    id: '/challenges/',
+    path: '/challenges/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedChallengesTimelineRoute =
+  AuthenticatedChallengesTimelineRouteImport.update({
+    id: '/challenges/timeline',
+    path: '/challenges/timeline',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedChallengesScavengerHuntRoute =
+  AuthenticatedChallengesScavengerHuntRouteImport.update({
+    id: '/challenges/scavenger-hunt',
+    path: '/challenges/scavenger-hunt',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedChallengesPhotoMemoryRoute =
+  AuthenticatedChallengesPhotoMemoryRouteImport.update({
+    id: '/challenges/photo-memory',
+    path: '/challenges/photo-memory',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedChallengesLoveLetterRoute =
+  AuthenticatedChallengesLoveLetterRouteImport.update({
+    id: '/challenges/love-letter',
+    path: '/challenges/love-letter',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/finale': typeof AuthenticatedFinaleRoute
+  '/challenges/love-letter': typeof AuthenticatedChallengesLoveLetterRoute
+  '/challenges/photo-memory': typeof AuthenticatedChallengesPhotoMemoryRoute
+  '/challenges/scavenger-hunt': typeof AuthenticatedChallengesScavengerHuntRoute
+  '/challenges/timeline': typeof AuthenticatedChallengesTimelineRoute
+  '/challenges/': typeof AuthenticatedChallengesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/finale': typeof AuthenticatedFinaleRoute
+  '/challenges/love-letter': typeof AuthenticatedChallengesLoveLetterRoute
+  '/challenges/photo-memory': typeof AuthenticatedChallengesPhotoMemoryRoute
+  '/challenges/scavenger-hunt': typeof AuthenticatedChallengesScavengerHuntRoute
+  '/challenges/timeline': typeof AuthenticatedChallengesTimelineRoute
+  '/challenges': typeof AuthenticatedChallengesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_authenticated/finale': typeof AuthenticatedFinaleRoute
+  '/_authenticated/challenges/love-letter': typeof AuthenticatedChallengesLoveLetterRoute
+  '/_authenticated/challenges/photo-memory': typeof AuthenticatedChallengesPhotoMemoryRoute
+  '/_authenticated/challenges/scavenger-hunt': typeof AuthenticatedChallengesScavengerHuntRoute
+  '/_authenticated/challenges/timeline': typeof AuthenticatedChallengesTimelineRoute
+  '/_authenticated/challenges/': typeof AuthenticatedChallengesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/finale'
+    | '/challenges/love-letter'
+    | '/challenges/photo-memory'
+    | '/challenges/scavenger-hunt'
+    | '/challenges/timeline'
+    | '/challenges/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/finale'
+    | '/challenges/love-letter'
+    | '/challenges/photo-memory'
+    | '/challenges/scavenger-hunt'
+    | '/challenges/timeline'
+    | '/challenges'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/finale'
+    | '/_authenticated/challenges/love-letter'
+    | '/_authenticated/challenges/photo-memory'
+    | '/_authenticated/challenges/scavenger-hunt'
+    | '/_authenticated/challenges/timeline'
+    | '/_authenticated/challenges/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +144,79 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/finale': {
+      id: '/_authenticated/finale'
+      path: '/finale'
+      fullPath: '/finale'
+      preLoaderRoute: typeof AuthenticatedFinaleRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/challenges/': {
+      id: '/_authenticated/challenges/'
+      path: '/challenges'
+      fullPath: '/challenges/'
+      preLoaderRoute: typeof AuthenticatedChallengesIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/challenges/timeline': {
+      id: '/_authenticated/challenges/timeline'
+      path: '/challenges/timeline'
+      fullPath: '/challenges/timeline'
+      preLoaderRoute: typeof AuthenticatedChallengesTimelineRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/challenges/scavenger-hunt': {
+      id: '/_authenticated/challenges/scavenger-hunt'
+      path: '/challenges/scavenger-hunt'
+      fullPath: '/challenges/scavenger-hunt'
+      preLoaderRoute: typeof AuthenticatedChallengesScavengerHuntRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/challenges/photo-memory': {
+      id: '/_authenticated/challenges/photo-memory'
+      path: '/challenges/photo-memory'
+      fullPath: '/challenges/photo-memory'
+      preLoaderRoute: typeof AuthenticatedChallengesPhotoMemoryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/challenges/love-letter': {
+      id: '/_authenticated/challenges/love-letter'
+      path: '/challenges/love-letter'
+      fullPath: '/challenges/love-letter'
+      preLoaderRoute: typeof AuthenticatedChallengesLoveLetterRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedFinaleRoute: typeof AuthenticatedFinaleRoute
+  AuthenticatedChallengesLoveLetterRoute: typeof AuthenticatedChallengesLoveLetterRoute
+  AuthenticatedChallengesPhotoMemoryRoute: typeof AuthenticatedChallengesPhotoMemoryRoute
+  AuthenticatedChallengesScavengerHuntRoute: typeof AuthenticatedChallengesScavengerHuntRoute
+  AuthenticatedChallengesTimelineRoute: typeof AuthenticatedChallengesTimelineRoute
+  AuthenticatedChallengesIndexRoute: typeof AuthenticatedChallengesIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedFinaleRoute: AuthenticatedFinaleRoute,
+  AuthenticatedChallengesLoveLetterRoute:
+    AuthenticatedChallengesLoveLetterRoute,
+  AuthenticatedChallengesPhotoMemoryRoute:
+    AuthenticatedChallengesPhotoMemoryRoute,
+  AuthenticatedChallengesScavengerHuntRoute:
+    AuthenticatedChallengesScavengerHuntRoute,
+  AuthenticatedChallengesTimelineRoute: AuthenticatedChallengesTimelineRoute,
+  AuthenticatedChallengesIndexRoute: AuthenticatedChallengesIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
