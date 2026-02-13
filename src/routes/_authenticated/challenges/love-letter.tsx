@@ -12,14 +12,14 @@ export const Route = createFileRoute("/_authenticated/challenges/love-letter")({
 });
 
 const LETTER_PARAGRAPHS = [
-  "My dearest,",
-  "There are so many things I want to tell you, and yet words never feel like enough. From the moment you walked into my life, everything changed — not in some dramatic, movie-style way, but in the quiet way that matters most.",
-  "You taught me that love isn't just about the big gestures. It's in the way you laugh at my terrible jokes. It's in the texts you send me when you see something that reminds you of me. It's in the comfortable silences we share.",
-  "Every day with you feels like unwrapping a gift I didn't know I was waiting for. You make the ordinary extraordinary, and I am endlessly grateful for that.",
-  "I know I don't always say it perfectly, and sometimes I forget to say it at all — but you are the best thing that has ever happened to me. Period.",
+  "Dear Baby,",
+  "Happy Valentines day :) There are so many things I want to tell you, but words are not enough. You changed my life in so many ways and I hope this special day shows you my appreciation for you",
+  "You take up most of my thoughts throughout the days and nights and your happiness is all I ever want to achieve. I know I sometimes dont listen and make you upset but I promise my intentions are and have always been good",
+  "Goofing off and having a silly time with you is the best possible feeling I've ever had and I hope we have many more of those moments",
+  "I know I don't always show it perfectly, but I love you so much and cannot wait to move across the country and start a new life with you",
   "So here I am, putting it in writing so you can never say I didn't tell you:",
   "You are my favorite person. My best friend. My home.",
-  "With all my love,\nYours forever ❤️",
+  "Mike,\nYours forever ❤️",
 ];
 
 function LoveLetter() {
@@ -47,13 +47,15 @@ function LoveLetter() {
             variant="light"
             color="valentine"
             size="sm"
-            leftSection="←"
-          >
+            leftSection="←">
             Back to Challenges
           </Button>
         </Box>
 
-        <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "loveLetter" : undefined} />
+        <HeartTracker
+          refreshKey={refreshKey}
+          justCompletedKey={!alreadyComplete && completed ? "loveLetter" : undefined}
+        />
 
         <Group gap="sm" justify="center">
           <Text className={shared.pageIcon}>💌</Text>
@@ -73,8 +75,7 @@ function LoveLetter() {
                   transition={{ delay: i * 0.3, duration: 0.5 }}
                   onAnimationComplete={() => {
                     if (i === LETTER_PARAGRAPHS.length - 1) setHasScrolledToEnd(true);
-                  }}
-                >
+                  }}>
                   <Text
                     size={i === 0 || i === LETTER_PARAGRAPHS.length - 1 ? "lg" : "md"}
                     fw={i === 0 ? 600 : 400}
@@ -84,8 +85,7 @@ function LoveLetter() {
                         i === 0 || i >= LETTER_PARAGRAPHS.length - 2
                           ? "var(--mantine-font-family-headings)"
                           : undefined,
-                    }}
-                  >
+                    }}>
                     {paragraph}
                   </Text>
                 </motion.div>
@@ -97,8 +97,7 @@ function LoveLetter() {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                >
+                  transition={{ delay: 0.5, duration: 0.5 }}>
                   <Box ta="center" mt="md">
                     <Button color="valentine" size="md" onClick={handleAcknowledge}>
                       I read every word ❤️
@@ -112,12 +111,17 @@ function LoveLetter() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
-          >
-            <Card p={{ base: "md", sm: "xl" }} radius="lg" ta="center" className={shared.completedCard}>
+            transition={{ duration: 0.5, type: "spring" }}>
+            <Card
+              p={{ base: "md", sm: "xl" }}
+              radius="lg"
+              ta="center"
+              className={shared.completedCard}>
               <Stack gap="md" align="center">
                 <HeartCelebration animate={!alreadyComplete} />
-                <Title order={3} className={shared.completedTitle}>Heart Earned!</Title>
+                <Title order={3} className={shared.completedTitle}>
+                  Heart Earned!
+                </Title>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>
