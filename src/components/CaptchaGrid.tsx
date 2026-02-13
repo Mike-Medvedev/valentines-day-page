@@ -3,13 +3,13 @@ import { Box, SimpleGrid, Text, Button, Image, Stack, Paper } from "@mantine/cor
 import { motion, AnimatePresence } from "framer-motion";
 import classes from "./CaptchaGrid.module.css";
 
-import marissaFunnel from "../assets/photos/marissa-funnel.jpeg";
-import marissaHike from "../assets/photos/marissa-hike.jpeg";
-import marissaPot from "../assets/photos/marissa-pot.jpeg";
-import marissaSplit from "../assets/photos/marissa-split.jpeg";
+import marissaFunnel from "../assets/photos/marissa-funnel.jpg";
+import marissaHike from "../assets/photos/marissa-hike.jpg";
+import marissaPot from "../assets/photos/marissa-pot.jpg";
+import marissaSplit from "../assets/photos/marissa-split.jpg";
 import metalDetector from "../assets/photos/metal-detector.webp";
 import pomegranite from "../assets/photos/pomegranite.jpg";
-import sandwhich from "../assets/photos/sandwhich.jpeg";
+import sandwhich from "../assets/photos/sandwhich.jpg";
 import ski from "../assets/photos/ski.jpg";
 import texas from "../assets/photos/texas.webp";
 

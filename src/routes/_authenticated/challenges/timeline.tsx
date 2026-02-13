@@ -8,8 +8,8 @@ import { ScratchCard } from "../../../components/ScratchCard";
 import { useProgress } from "../../../lib/ProgressContext";
 import shared from "./shared.module.css";
 
-import headstand from "../../../assets/photos/headstand.png";
-import firstDate from "../../../assets/photos/first-date.jpeg";
+import headstand from "../../../assets/photos/headstand.webp";
+import firstDate from "../../../assets/photos/first-date.jpg";
 import sigma from "../../../assets/photos/sigma.jpg";
 
 export const Route = createFileRoute("/_authenticated/challenges/timeline")({

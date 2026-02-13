@@ -18,9 +18,9 @@ import { HeartCelebration } from "../../../components/HeartCelebration";
 import { useProgress } from "../../../lib/ProgressContext";
 import shared from "./shared.module.css";
 
-import dinnerPic from "../../../assets/photos/dinner-pic.jpeg";
+import dinnerPic from "../../../assets/photos/dinner-pic.jpg";
 import theCanuck from "../../../assets/photos/the-canuck.jpg";
-import partyHat from "../../../assets/photos/party-hat.jpeg";
+import partyHat from "../../../assets/photos/party-hat.jpg";
 
 export const Route = createFileRoute("/_authenticated/challenges/photo-memory")({
   component: PhotoMemory,
