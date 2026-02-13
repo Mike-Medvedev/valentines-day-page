@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button, Card, Stack, Text, TextInput, Title, Progress, Box } from "@mantine/core";
+import { Button, Card, Stack, Text, TextInput, Title, Progress, Box, Group } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
 import { HeartCelebration } from "../../../components/HeartCelebration";
-import { completeChallenge, getProgress } from "../../../lib/progress";
+import { useProgress } from "../../../lib/ProgressContext";
 import shared from "./shared.module.css";
 
 export const Route = createFileRoute("/_authenticated/challenges/scavenger-hunt")({
@@ -12,25 +12,13 @@ export const Route = createFileRoute("/_authenticated/challenges/scavenger-hunt"
 });
 
 const QUESTIONS = [
-  {
-    question: "What was the subject line of the first email I ever sent you?",
-    hint: "Check your Gmail inbox, go way back...",
-    answer: "hello",
-  },
-  {
-    question: "What did I text you at 2am that one night?",
-    hint: "Check our text messages around that time...",
-    answer: "i miss you",
-  },
-  {
-    question: "What restaurant did I suggest in our emails for our first date?",
-    hint: "Search your emails for restaurant names...",
-    answer: "olive garden",
-  },
+  { question: "What was the subject line of the first email I ever sent you?", answer: "hello" },
+  { question: "What did I text you at 2am that one night?", answer: "i miss you" },
+  { question: "What restaurant did I suggest in our emails for our first date?", answer: "olive garden" },
 ];
 
 function ScavengerHunt() {
-  const progress = getProgress();
+  const { progress, completeChallenge } = useProgress();
   const alreadyComplete = progress.scavengerHunt;
 
   const [currentQ, setCurrentQ] = useState(0);
@@ -74,15 +62,12 @@ function ScavengerHunt() {
 
         <HeartTracker refreshKey={refreshKey} justCompletedKey={!alreadyComplete && completed ? "scavengerHunt" : undefined} />
 
-        <Stack gap="xs" align="center">
+        <Group gap="sm" justify="center">
           <Text className={shared.pageIcon}>🔍</Text>
-          <Title order={2} ta="center" className={shared.pageTitle}>
+          <Title order={2} className={shared.pageTitle}>
             Scavenger Hunt
           </Title>
-          <Text size="sm" ta="center" maw={400} style={{ color: "var(--color-text-dimmed)" }}>
-            Go through our emails and texts to find the answers!
-          </Text>
-        </Stack>
+        </Group>
 
         {!completed ? (
           <>
@@ -104,21 +89,15 @@ function ScavengerHunt() {
               >
                 <Card p={{ base: "md", sm: "xl" }} radius="lg" className={shared.glassCard}>
                   <Stack gap="md">
-                    <Text size="xs" c="dimmed">
-                      Question {currentQ + 1} of {QUESTIONS.length}
-                    </Text>
                     <Text fw={600} size="lg" className={shared.questionText}>
                       {QUESTIONS[currentQ].question}
-                    </Text>
-                    <Text size="sm" c="dimmed" fs="italic">
-                      {QUESTIONS[currentQ].hint}
                     </Text>
                     <TextInput
                       placeholder="Type your answer..."
                       value={answer}
                       onChange={(e) => { setAnswer(e.currentTarget.value); setError(false); }}
                       onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                      error={error ? "Not quite... try again!" : undefined}
+                      error={error ? "Try again" : undefined}
                     />
                     <Button color="valentine" onClick={handleSubmit} disabled={!answer.trim()}>
                       Submit Answer
@@ -140,7 +119,6 @@ function ScavengerHunt() {
                 <Title order={3} className={shared.completedTitle}>
                   Heart Earned!
                 </Title>
-                <Text style={{ color: "var(--color-text-dimmed)" }}>You really do pay attention to our conversations!</Text>
                 <Button component={Link} to="/challenges" color="valentine" variant="light" mt="sm">
                   Back to Challenges
                 </Button>

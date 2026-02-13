@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Group, Text } from "@mantine/core";
 import { motion, AnimatePresence } from "framer-motion";
-import { getProgress, type ChallengeKey } from "../lib/progress";
+import { useProgress } from "../lib/ProgressContext";
+import type { ChallengeKey } from "../lib/progress";
 import classes from "./HeartTracker.module.css";
 
 const CHALLENGES: { key: ChallengeKey; label: string }[] = [
@@ -18,20 +19,19 @@ interface HeartTrackerProps {
 }
 
 export function HeartTracker({ refreshKey, justCompletedKey }: HeartTrackerProps) {
-  const progress = getProgress();
+  const { progress, completedCount } = useProgress();
   void refreshKey;
 
-  const completedCount = Object.values(progress).filter(Boolean).length;
-
-  // Delay showing the just-completed heart so the celebration plays first
   const [receivedKey, setReceivedKey] = useState<ChallengeKey | null>(null);
 
+  // When justCompletedKey changes, start a delayed timer to trigger the receive animation
   useEffect(() => {
     if (!justCompletedKey) return;
-    // Wait for the celebration animation, then trigger the receive
+
     const timer = setTimeout(() => {
       setReceivedKey(justCompletedKey);
     }, 600);
+
     return () => clearTimeout(timer);
   }, [justCompletedKey]);
 
@@ -43,7 +43,7 @@ export function HeartTracker({ refreshKey, justCompletedKey }: HeartTrackerProps
           const isReceiving = challenge.key === justCompletedKey;
           const hasReceived = challenge.key === receivedKey;
 
-          // For hearts being received: show filled only after animation starts
+          // For hearts being received: show filled only after animation delay
           // For other hearts: show their saved state
           const showFilled = isReceiving ? hasReceived : filled;
 

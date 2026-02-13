@@ -55,16 +55,6 @@
   font-size: clamp(1rem, 2.5vw, 1.125rem);
 }
 
-.unlockButton {
-  font-size: clamp(14px, 3vw, 18px);
-  font-family: var(--mantine-font-family-headings);
-}
-
-.glowWrap {
-  display: inline-block;
-  border-radius: 999px;
-}
-
 @media (max-width: $mantine-breakpoint-xs) {
   .challengeCard {
     padding: var(--mantine-spacing-md);
