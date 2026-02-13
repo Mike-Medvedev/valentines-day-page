@@ -18,7 +18,8 @@ interface Particle {
   bobDuration: number;
   spinSpeed: number;
   delay: number;
-  opacity: number;
+  peakOpacity: number;
+  fadeDuration: number;
   color: string;
 }
 
@@ -36,14 +37,15 @@ export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
         x: Math.random() * 95,
         y: Math.random() * 95,
         emoji,
-        size: isSunflower ? 20 + Math.random() * 16 : 14 + Math.random() * 18,
+        size: isSunflower ? 28 + Math.random() * 20 : 22 + Math.random() * 22,
         swayAmount: 3 + Math.random() * 5,
         swayDuration: 3 + Math.random() * 3,
         bobAmount: 2 + Math.random() * 4,
         bobDuration: 2 + Math.random() * 3,
         spinSpeed: 6 + Math.random() * 8,
-        delay: Math.random() * 4,
-        opacity: 0.2 + Math.random() * 0.25,
+        delay: Math.random() * 6,
+        peakOpacity: 0.25 + Math.random() * 0.3,
+        fadeDuration: 4 + Math.random() * 4,
         color: HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)],
       };
     });
@@ -55,10 +57,10 @@ export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
         <motion.div
           key={p.id}
           className={classes.particle}
-          initial={{ x: `${p.x}vw`, y: `${p.y}vh`, opacity: 0, scale: 0.5 }}
+          initial={{ x: `${p.x}vw`, y: `${p.y}vh`, opacity: 0, scale: 0.6 }}
           animate={{
-            opacity: [0, p.opacity, p.opacity, p.opacity, 0],
-            scale: [0.5, 1, 1, 1, 0.5],
+            opacity: [0, p.peakOpacity, 0, p.peakOpacity, 0],
+            scale: [0.6, 1.05, 0.85, 1.05, 0.6],
             x: [
               `${p.x}vw`,
               `${p.x + p.swayAmount}vw`,
@@ -76,7 +78,7 @@ export function FloatingHearts({ count = 24 }: FloatingHeartsProps) {
             rotate: [0, 15, -15, 10, -10, 0],
           }}
           transition={{
-            duration: p.swayDuration + p.bobDuration + 4,
+            duration: p.fadeDuration + p.swayDuration + p.bobDuration,
             delay: p.delay,
             repeat: Infinity,
             ease: "easeInOut",

@@ -16,6 +16,7 @@ export const valentine: MantineColorsTuple = [
 
 export const theme = createTheme({
   primaryColor: "valentine",
+  primaryShade: 4,
   colors: {
     valentine,
   },
