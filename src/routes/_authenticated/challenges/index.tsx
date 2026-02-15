@@ -4,6 +4,8 @@ import { Box, Card, SimpleGrid, Stack, Text, Title, Button, Badge } from "@manti
 import { motion } from "framer-motion";
 import { HeartTracker } from "../../../components/HeartTracker";
 import { useProgress } from "../../../lib/ProgressContext";
+import { resetProgress } from "../../../lib/progress";
+import { clearAuth } from "../../../lib/auth";
 import type { ChallengeKey } from "../../../lib/progress";
 import classes from "./index.module.css";
 
@@ -19,7 +21,12 @@ interface ChallengeInfo {
 }
 
 const CHALLENGES: ChallengeInfo[] = [
-  { key: "scavengerHunt", title: "Scavenger Hunt", icon: "🔍", route: "/challenges/scavenger-hunt" },
+  {
+    key: "scavengerHunt",
+    title: "Scavenger Hunt",
+    icon: "🔍",
+    route: "/challenges/scavenger-hunt",
+  },
   { key: "photoMemory", title: "Photo Memory", icon: "📸", route: "/challenges/photo-memory" },
   { key: "timeline", title: "Our Timeline", icon: "✨", route: "/challenges/timeline" },
   { key: "loveLetter", title: "Love Letter", icon: "💌", route: "/challenges/love-letter" },
@@ -28,6 +35,12 @@ const CHALLENGES: ChallengeInfo[] = [
 function ChallengeHub() {
   const [refreshKey] = useState(0);
   const { progress, isAllComplete } = useProgress();
+
+  function handleSiteReset() {
+    resetProgress();
+    clearAuth();
+    window.location.href = "/";
+  }
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
@@ -52,8 +65,7 @@ function ChallengeHub() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                style={{ height: "100%" }}
-              >
+                style={{ height: "100%" }}>
                 <Card
                   component={Link}
                   to={challenge.route}
@@ -61,10 +73,13 @@ function ChallengeHub() {
                   radius="lg"
                   className={classes.challengeCard}
                   data-completed={String(!!completed)}
-                  h="100%"
-                >
+                  h="100%">
                   {completed && (
-                    <Badge color="valentine" variant="filled" size="sm" className={classes.completeBadge}>
+                    <Badge
+                      color="valentine"
+                      variant="filled"
+                      size="sm"
+                      className={classes.completeBadge}>
                       Complete
                     </Badge>
                   )}
@@ -84,8 +99,7 @@ function ChallengeHub() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, type: "spring" }}
-          >
+            transition={{ duration: 0.6, type: "spring" }}>
             <Box ta="center" mt="md">
               <Button
                 component={Link}
@@ -94,13 +108,18 @@ function ChallengeHub() {
                 color="valentine"
                 radius="xl"
                 px={32}
-                rightSection="🤍"
-              >
+                rightSection="🤍">
                 Unlock Your Surprise
               </Button>
             </Box>
           </motion.div>
         )}
+        <div className={classes.resetContainer}>
+          <Button variant="outline" onClick={handleSiteReset}>
+            {" "}
+            Reset Site{" "}
+          </Button>
+        </div>
       </Stack>
     </motion.div>
   );

@@ -65,7 +65,7 @@ function FinalePage() {
             colors={CONFETTI_COLORS}
             className={classes.confetti}
           />,
-          document.body
+          document.body,
         )}
 
       {!answered ? (

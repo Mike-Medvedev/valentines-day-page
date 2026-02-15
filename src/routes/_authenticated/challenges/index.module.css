@@ -70,3 +70,7 @@
     right: 8px;
   }
 }
+
+.resetContainer {
+  align-self: center;
+}
